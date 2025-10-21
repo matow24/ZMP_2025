@@ -9,11 +9,17 @@ using namespace std;
 int main()
 {
   void *pLibHnd_Move = dlopen("libInterp4Move.so",RTLD_LAZY);
+  void *pLibHnd_Pause = dlopen("libInterp4Pause.so",RTLD_LAZY);
   AbstractInterp4Command *(*pCreateCmd_Move)(void);
+  AbstractInterp4Command *(*pCreateCmd_Pause)(void);
   void *pFun;
 
   if (!pLibHnd_Move) {
     cerr << "!!! Brak biblioteki: Interp4Move.so" << endl;
+    return 1;
+  }
+  if (!pLibHnd_Pause) {
+    cerr << "!!! Brak biblioteki: Interp4Pause.so" << endl;
     return 1;
   }
 
