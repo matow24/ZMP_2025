@@ -64,6 +64,8 @@ bool Interp4Move::ExecCmd( AbstractScene      &rScn,
   /*
    *  Tu trzeba napisać odpowiedni kod.
    */
+  // rScn.FindMobileObj(sMobObjName)->SetPosition_m(/*wektor ruchu*/);
+  
   return true;
 }
 

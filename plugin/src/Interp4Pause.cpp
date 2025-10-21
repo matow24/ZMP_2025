@@ -64,6 +64,13 @@ bool Interp4Pause::ExecCmd( AbstractScene      &rScn,
   /*
    *  Tu trzeba napisać odpowiedni kod.
    */
+  // speed = 0;
+  // rotation_speed = 0;
+  rScn.FindMobileObj(sMobObjName)->SetPosition_m(rScn.FindMobileObj(sMobObjName)->GetPosition_m());
+  rScn.FindMobileObj(sMobObjName)->SetAng_Pitch_deg(rScn.FindMobileObj(sMobObjName)->GetAng_Pitch_deg());
+  rScn.FindMobileObj(sMobObjName)->SetAng_Roll_deg(rScn.FindMobileObj(sMobObjName)->GetAng_Roll_deg());
+  rScn.FindMobileObj(sMobObjName)->SetAng_Yaw_deg(rScn.FindMobileObj(sMobObjName)->GetAng_Yaw_deg());
+
   return true;
 }
 
