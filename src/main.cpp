@@ -20,20 +20,20 @@ int main()
   void *pFunP;
 
   if (!pLibHnd_Move) {
-    cerr << "!!! Brak biblioteki: Interp4Move.so" << endl;
+    cerr << "!!! Brak biblioteki: libInterp4Move.so" << endl;
     return 1;
   }
   if (!pLibHnd_Pause) {
-    cerr << "!!! Brak biblioteki: Interp4Pause.so" << endl;
+    cerr << "!!! Brak biblioteki: libInterp4Pause.so" << endl;
     return 1;
   }
   /*
   if (!pLibHnd_Set) {
-    cerr << "!!! Brak biblioteki: Interp4Set.so" << endl;
+    cerr << "!!! Brak biblioteki: libInterp4Set.so" << endl;
     return 1;
   }
   if (!pLibHnd_Rotate) {
-    cerr << "!!! Brak biblioteki: Interp4Rotate.so" << endl;
+    cerr << "!!! Brak biblioteki: libInterp4Rotate.so" << endl;
     return 1;
   }
   */
