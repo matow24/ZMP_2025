@@ -25,8 +25,13 @@ class Interp4Set: public AbstractInterp4Command {
    *  Tu należy zdefiniować pola, które są niezbędne
    *  do przechowywania wartości parametrów danego polecenia.
    */
-  char* _Name;
-  // double _init_location; //?
+  std::string _name;
+  double _init_x; 
+  double _init_y;
+  double _init_z;
+  double _init_roll;
+  double _init_pitch;
+  double _init_yaw;
 
  public:
   /*!

@@ -28,7 +28,7 @@ AbstractInterp4Command* CreateCmd(void)
 /*!
  *
  */
-Interp4Set::Interp4Set(): _Name("nikt")
+Interp4Set::Interp4Set(): _name(""), _init_x(0), _init_y(0), _init_z(0), _init_roll(0), _init_pitch(0), _init_yaw(0)
 {}
 
 
@@ -40,7 +40,7 @@ void Interp4Set::PrintCmd() const
   /*
    *  Tu trzeba napisać odpowiednio zmodyfikować kod poniżej.
    */
-  cout << GetCmdName() << " " << _Name  << " 10  2" << endl;
+  cout << GetCmdName() << " " << _name<< " " << _init_x << " " << _init_y << " " << _init_z << " " << _init_roll << " " << _init_pitch <<< " " < _init_yaw << endl;
 }
 
 
@@ -64,7 +64,7 @@ bool Interp4Set::ExecCmd( AbstractScene      &rScn,
   /*
    *  Tu trzeba napisać odpowiedni kod.
    */
-  rScn.FindMobileObj(sMobObjName)->SetName(_Name);
+  rScn.FindMobileObj(sMobObjName)->SetName(_name);
   
   return true;
 }

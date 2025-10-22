@@ -40,7 +40,7 @@ void Interp4Rotate::PrintCmd() const
   /*
    *  Tu trzeba napisać odpowiednio zmodyfikować kod poniżej.
    */
-  cout << GetCmdName() << " " << _Roll_Speed_mmS  << " 10  2" << endl;
+  cout << GetCmdName() << " " << _name<< " " << _axis << " " << _rot_speed_degS << " " << _rot_deg << endl;
 }
 
 
