@@ -1,56 +1,13 @@
 #include <iostream>
-#include <dlfcn.h>
 #include <cassert>
 #include "AbstractInterp4Command.hh"
 #include "LibInterface.hh"
 
 using namespace std;
 
-LibInterface::LibInterface(): _cmdName("") {}
-
-LibInterface::~LibInterface()
-{
-  if(_libHandler != nullptr) dlclose(_libHandler);
-  //if(_pCreate_Cmd != nullptr) delete(_pCreate_Cmd);
-}
-
-bool LibInterface::add_libHandler()
-{
-  std::string libName = "Interp4" + _cmdName + ".so"; 
-  _libHandler = dlopen(libName.c_str(), RTLD_LAZY);
-  
-  if (!_libHandler) {
-    cerr << "!!! Brak biblioteki: " << libName.c_str() << endl;
-    return 1;
-  }
-
-  return 0;
-}
-
-bool LibInterface::createCmd(){
-  void* pFun;
-  pFun = dlsym(_libHandler,"CreateCmd");
-
-  if (!pFun) {
-    cerr << "!!! Nie znaleziono funkcji CreateCmd" << endl;
-    return 1;
-  }
-
-  _pCreate_Cmd = reinterpret_cast<AbstractInterp4Command* (*)(void)>(pFun);
-  
-  /************/
-  AbstractInterp4Command *pCmd = _pCreate_Cmd();
-
-  if(_cmdName != pCmd->GetCmdName()) {
-    cerr << "!!! Nazwa stworzonej funkcji nie odpowiada oryginalnej" << endl;
-    return 1;
-  }
-    
-  return 0;
-}
-
 PlugInContainer::PlugInContainer()
 {
+  // stworz mape (dodaj elementy/wtyczki, jak zwał)
   for (const auto& [key, value] : mapa)
         std::cout << '[' << key << "] = " << value << "; ";
 }
@@ -58,6 +15,14 @@ PlugInContainer::PlugInContainer()
 PlugInContainer::~PlugInContainer()
 {
   mapa.clear();
+}
+
+bool PlugInContainer::openLibInterface()
+{
+  // otrzymaj nazwe akcji
+  // znajdz akcje na mapie po nazwie
+  // otworz plugin (add_libHandler())
+  // albo stworz komende (createCmd())
 }
 
 int main()

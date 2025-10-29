@@ -4,6 +4,8 @@
 #include "AbstractInterp4Command.hh"
 #include <map>
 #include <memory>
+#include <dlfcn.h>
+
 
 /*!
  * \file
@@ -35,6 +37,8 @@ class PlugInContainer
 public:
     PlugInContainer();
     ~PlugInContainer();
+    bool openLibInterface();
+    bool openPlugin(std::string); //idk?
 };
 
 #endif
