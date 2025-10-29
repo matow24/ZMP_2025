@@ -6,9 +6,12 @@
 
 using namespace std;
 
-LibInterface::~LibInterface(){
+LibInterface::LibInterface(): _cmdName("") {}
+
+LibInterface::~LibInterface()
+{
   if(_libHandler != nullptr) dlclose(_libHandler);
-  if(_pCreate_Cmd != nullptr) delete(_pCreate_Cmd);
+  //if(_pCreate_Cmd != nullptr) delete(_pCreate_Cmd);
 }
 
 bool LibInterface::add_libHandler()
@@ -38,19 +41,24 @@ bool LibInterface::createCmd(){
   /************/
   AbstractInterp4Command *pCmd = _pCreate_Cmd();
 
-  if(_cmdName != pCmd->GetCmdName()) // something loaded wrong
-      return 1;
+  if(_cmdName != pCmd->GetCmdName()) {
+    cerr << "!!! Nazwa stworzonej funkcji nie odpowiada oryginalnej" << endl;
+    return 1;
+  }
     
   return 0;
 }
 
 PlugInContainer::PlugInContainer()
 {
-  LibInterface lib_interface;
-
-
+  for (const auto& [key, value] : mapa)
+        std::cout << '[' << key << "] = " << value << "; ";
 }
 
+PlugInContainer::~PlugInContainer()
+{
+  mapa.clear();
+}
 
 int main()
 {

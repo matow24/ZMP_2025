@@ -37,10 +37,8 @@ Interp4Set::Interp4Set(): _name(""), _init_x(0), _init_y(0), _init_z(0), _init_r
  */
 void Interp4Set::PrintCmd() const
 {
-  /*
-   *  Tu trzeba napisać odpowiednio zmodyfikować kod poniżej.
-   */
-  cout << GetCmdName() << " " << _name<< " " << _init_x << " " << _init_y << " " << _init_z << " " << _init_roll << " " << _init_pitch <<< " " < _init_yaw << endl;
+  cout << GetCmdName() << " " << _name<< " " << _init_x << " " << _init_y << " " << _init_z 
+                            << " " << _init_roll << " " << _init_pitch << " " << _init_yaw << endl;
 }
 
 
@@ -61,10 +59,17 @@ bool Interp4Set::ExecCmd( AbstractScene      &rScn,
 			   AbstractComChannel &rComChann
 			 )
 {
-  /*
-   *  Tu trzeba napisać odpowiedni kod.
-   */
-  rScn.FindMobileObj(sMobObjName)->SetName(_name);
+  rScn.FindMobileObj(sMobObjName)->SetName(_name.c_str());
+
+  Vector3D Vinit_location;
+  Vinit_location[0] = _init_x;
+  Vinit_location[1] = _init_y;
+  Vinit_location[2] = _init_z;
+  rScn.FindMobileObj(sMobObjName)->SetPosition_m(Vinit_location);
+
+  rScn.FindMobileObj(sMobObjName)->SetAng_Roll_deg(_init_roll);
+  rScn.FindMobileObj(sMobObjName)->SetAng_Pitch_deg(_init_pitch);
+  rScn.FindMobileObj(sMobObjName)->SetAng_Yaw_deg(_init_yaw);
   
   return true;
 }
@@ -96,5 +101,5 @@ AbstractInterp4Command* Interp4Set::CreateCmd()
  */
 void Interp4Set::PrintSyntax() const
 {
-  cout << "   Set  NazwaObiektu  Szybkosc[m/s]  DlugoscDrogi[m]" << endl;
+  cout << "   Set  NazwaObiektu   X    Y    Z   Roll  Pitch  Yaw" << endl;
 }

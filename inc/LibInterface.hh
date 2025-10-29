@@ -2,6 +2,8 @@
 #define LIBINTERFACE_HH
 
 #include "AbstractInterp4Command.hh"
+#include <map>
+#include <memory>
 
 /*!
  * \file
@@ -18,6 +20,7 @@ class LibInterface
     AbstractInterp4Command *(*_pCreate_Cmd)(void);
 
 public:
+    LibInterface();
     ~LibInterface();
     bool add_libHandler();
     bool createCmd();
@@ -27,31 +30,11 @@ class PlugInContainer
 {
     // mapa - czymkolwiek jest (klucze, słownik?)
     // w ramach klasy otwieranie bilbiotek
+    std::map<std::string,std::shared_ptr<LibInterface>> mapa{ {"Set", }, {"Move", }, {"Rotate", }, {"Pause", }};
 
-    LibInterface lib_interface;
 public:
     PlugInContainer();
+    ~PlugInContainer();
 };
-
-/*
-  void *pLibHnd_Move = dlopen("libInterp4Move.so",RTLD_LAZY);
-  AbstractInterp4Command *(*pCreateCmd_Move)(void);
-  if (!pLibHnd_Move) {
-    cerr << "!!! Brak biblioteki: libInterp4Move.so" << endl;
-    return 1;
-  }
-  Fun = dlsym(pLibHnd_Move,"CreateCmd");
-  if (!pFun) {
-    cerr << "!!! Nie znaleziono funkcji CreateCmd" << endl;
-    return 1;
-  }
-  pCreateCmd_Move = reinterpret_cast<AbstractInterp4Command* (*)(void)>(pFun);
-
-  AbstractInterp4Command *pCmd = pCreateCmd_Move();
-  
-  delete pCmd;
-
-  dlclose(pLibHnd_Move);
-  */
 
 #endif
