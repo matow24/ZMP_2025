@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cassert>
 #include "AbstractInterp4Command.hh"
-#include "LibInterface.hh"
+#include "PlugInContainer.hh"
 
 using namespace std;
 
@@ -17,12 +17,24 @@ PlugInContainer::~PlugInContainer()
   mapa.clear();
 }
 
-bool PlugInContainer::openLibInterface()
+/*!
+  * \brief Otwiera wybrany plugin.
+  *
+  * Znajduje LibInterface po kluczu i otwiera bibliotekę
+  * \param[in] klucz - nazwa komendy.
+  * \retval true - operacja nie powiodła się,
+  * \retval false - w przypadku przeciwnym.
+  */
+bool PlugInContainer::openPlugin(std::string klucz)
 {
-  // otrzymaj nazwe akcji
-  // znajdz akcje na mapie po nazwie
-  // otworz plugin (add_libHandler())
-  // albo stworz komende (createCmd())
+  for (const auto& [key, value] : mapa){
+    if(klucz == key){
+      if((*value).add_libHandler(klucz)) return 1;
+      return 0;
+    }
+  }
+  std::cerr << "!!! Nie znaleziono polecenia " << klucz <<  std::endl;
+  return 1;
 }
 
 int main()

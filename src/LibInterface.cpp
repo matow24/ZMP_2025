@@ -9,9 +9,9 @@ LibInterface::~LibInterface()
   if(_libHandler != nullptr) dlclose(_libHandler);
 }
 
-bool LibInterface::add_libHandler()
+bool LibInterface::add_libHandler(std::string cmdName)
 {
-  std::string libName = "Interp4" + _cmdName + ".so"; 
+  std::string libName = "Interp4" + cmdName + ".so"; 
   _libHandler = dlopen(libName.c_str(), RTLD_LAZY);
   
   if (!_libHandler) {
@@ -36,10 +36,10 @@ bool LibInterface::createCmd(){
   /************/
   AbstractInterp4Command *pCmd = _pCreate_Cmd();
 
-  if(_cmdName != pCmd->GetCmdName()) {
+  /*if(_cmdName != pCmd->GetCmdName()) {
     cerr << "!!! Nazwa stworzonej funkcji nie odpowiada oryginalnej" << endl;
     return 1;
-  }
+  }*/
     
   return 0;
 }
