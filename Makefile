@@ -20,14 +20,25 @@ CPPFLAGS=-Wall -pedantic -std=c++17 -Iinc
 LDFLAGS=-Wall
 
 
-
-
 interp: obj/main.o
 	g++ ${LDFLAGS} -o interp  obj/main.o -ldl
 
+interp: obj/PlugInContainer.o
+	g++ ${LDFLAGS} -o interp  obj/PlugInContainer.o -ldl
+
+interp: obj/LibInterface.o
+	g++ ${LDFLAGS} -o interp  obj/LibInterface.o -ldl
+
+
 obj/main.o: src/main.cpp inc/AbstractInterp4Command.hh inc/AbstractScene.hh\
-            inc/AbstractComChannel.hh
+            inc/AbstractComChannel.hh inc/PlugInContainer.hh
 	g++ -c ${CPPFLAGS} -o obj/main.o src/main.cpp
+
+obj/PlugInContainer.o: src/PlugInContainer.cpp inc/PlugInContainer.hh
+	g++ -c ${CPPFLAGS} -o obj/PlugInContainer.o src/PlugInContainer.cpp
+
+obj/LibInterface.o: src/LibInterface.cpp inc/LibInterface.hh inc/AbstractInterp4Command.hh
+	g++ -c ${CPPFLAGS} -o obj/LibInterface.o src/LibInterface.cpp
 
 doc:
 	cd dox; make
