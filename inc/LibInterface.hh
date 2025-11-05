@@ -14,15 +14,16 @@
  */
 class LibInterface
 {
-    // std::string _cmdName; // do wyrzucenia po stworzeniu std::map ||klucz:std::string, LibInterface*||
     void *_libHandler;
     AbstractInterp4Command *(*_pCreate_Cmd)(void);
+
+    bool createCmd();
 
 public:
     LibInterface();
     ~LibInterface();
     bool add_libHandler(std::string);
-    bool createCmd();
+    AbstractInterp4Command* get_pCreate_Cmd();
 };
 
 #endif

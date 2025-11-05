@@ -2,7 +2,7 @@
 
 using namespace std;
 
-LibInterface::LibInterface(): _cmdName("") {}
+LibInterface::LibInterface() {}
 
 LibInterface::~LibInterface()
 {
@@ -32,14 +32,13 @@ bool LibInterface::createCmd(){
   }
 
   _pCreate_Cmd = reinterpret_cast<AbstractInterp4Command* (*)(void)>(pFun);
-  
-  /************/
-  AbstractInterp4Command *pCmd = _pCreate_Cmd();
 
-  /*if(_cmdName != pCmd->GetCmdName()) {
-    cerr << "!!! Nazwa stworzonej funkcji nie odpowiada oryginalnej" << endl;
-    return 1;
-  }*/
-    
   return 0;
+}
+
+AbstractInterp4Command* LibInterface::get_pCreate_Cmd()
+{
+  if(createCmd()) return nullptr;
+
+  return _pCreate_Cmd();
 }
