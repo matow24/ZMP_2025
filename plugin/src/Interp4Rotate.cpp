@@ -71,14 +71,15 @@ bool Interp4Rotate::ExecCmd( AbstractScene      &rScn,
 
 
 /*!
- *
+ * Strm_CmdsList.fail() - true w przypadku błędu
  */
 bool Interp4Rotate::ReadParams(std::istream& Strm_CmdsList)
 {
   /*
    *  Tu trzeba napisać odpowiedni kod.
    */
-  return true;
+  Strm_CmdsList >> _name >> _axis >> _rot_speed_degS >> _rot_deg;
+  return Strm_CmdsList.fail();
 }
 
 

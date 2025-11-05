@@ -28,7 +28,7 @@ AbstractInterp4Command* CreateCmd(void)
 /*!
  *
  */
-Interp4Move::Interp4Move(): _speed_mmS(0)
+Interp4Move::Interp4Move(): _speed_mmS(0), _path_len(0)
 {}
 
 
@@ -75,7 +75,9 @@ bool Interp4Move::ReadParams(std::istream& Strm_CmdsList)
   /*
    *  Tu trzeba napisać odpowiedni kod.
    */
-  return true;
+
+  Strm_CmdsList >> _name >> _speed_mmS >> _path_len;
+  return Strm_CmdsList.fail();
 }
 
 

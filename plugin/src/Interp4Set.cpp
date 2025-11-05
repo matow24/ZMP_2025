@@ -83,7 +83,8 @@ bool Interp4Set::ReadParams(std::istream& Strm_CmdsList)
   /*
    *  Tu trzeba napisać odpowiedni kod.
    */
-  return true;
+  Strm_CmdsList >> _name >> _init_x >> _init_y >> _init_z >> _init_roll >> _init_pitch >> _init_yaw;
+  return Strm_CmdsList.fail();
 }
 
 

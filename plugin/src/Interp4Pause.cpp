@@ -74,7 +74,8 @@ bool Interp4Pause::ReadParams(std::istream& Strm_CmdsList)
   /*
    *  Tu trzeba napisać odpowiedni kod.
    */
-  return true;
+  Strm_CmdsList >> _pause_time_ms;
+  return Strm_CmdsList.fail();
 }
 
 
