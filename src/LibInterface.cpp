@@ -11,7 +11,7 @@ LibInterface::~LibInterface()
 
 bool LibInterface::add_libHandler(std::string cmdName)
 {
-  std::string libName = "Interp4" + cmdName + ".so"; 
+  std::string libName = "libInterp4" + cmdName + ".so"; 
   _libHandler = dlopen(libName.c_str(), RTLD_LAZY);
   
   if (!_libHandler) {

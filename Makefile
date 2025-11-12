@@ -20,14 +20,8 @@ CPPFLAGS=-Wall -pedantic -std=c++17 -Iinc
 LDFLAGS=-Wall
 
 
-interp: obj/main.o
-	g++ ${LDFLAGS} -o interp  obj/main.o -ldl
-
-interp: obj/PlugInContainer.o
-	g++ ${LDFLAGS} -o interp  obj/PlugInContainer.o -ldl
-
-interp: obj/LibInterface.o
-	g++ ${LDFLAGS} -o interp  obj/LibInterface.o -ldl
+interp: obj/main.o obj/PlugInContainer.o obj/LibInterface.o
+	g++ ${LDFLAGS} -o interp  obj/main.o obj/PlugInContainer.o obj/LibInterface.o -ldl
 
 
 obj/main.o: src/main.cpp inc/AbstractInterp4Command.hh inc/AbstractScene.hh\
