@@ -9,6 +9,7 @@
 *.lo
 *.o
 *.obj
+interp
 
 # Precompiled Headers
 *.gch
