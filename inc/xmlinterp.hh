@@ -86,4 +86,6 @@ class XMLInterp4Config : public xercesc::DefaultHandler {
   private:
 };
 
+bool ReadFile(const char* sFileName, Configuration &rConfig);
+
 #endif
