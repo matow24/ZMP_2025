@@ -121,8 +121,9 @@ void XMLInterp4Config::ProcessCubeAttrs(const xercesc::Attributes  &rAttrs)
  // Wyświetlenie nazw atrybutów i ich "wartości"
  //
  cout << " Atrybuty:" << endl;
- for (auto& a : v_sAttr)
-        std::cout << a.name << " = \"" << a.value << "\"\n";
+ cout << v_sAttr.at(0).name << " = " << v_sAttr.at(0).value << endl;
+//  for (auto& a : v_sAttr)
+//         std::cout << a.name << " = \"" << a.value << "\"\n";
 
  //-----------------------------------------------------------------------------
  // Przetwarzanie wartości parametrów na Vector3D
@@ -141,7 +142,7 @@ void XMLInterp4Config::ProcessCubeAttrs(const xercesc::Attributes  &rAttrs)
       cerr << " Blad!!!" << endl;
     } else {
         all_params.push_back(params);
-        cout << params << endl;
+        cout << (*i).name << " = " << params << endl;
     }
  }
 }
