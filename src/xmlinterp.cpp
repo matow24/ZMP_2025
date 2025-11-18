@@ -118,7 +118,7 @@ void XMLInterp4Config::ProcessCubeAttrs(const xercesc::Attributes  &rAttrs)
  }
 
  //-----------------------------------------------------------------------------
- // Przetwarzanie wartości parametrów
+ // Przetwarzanie wartości parametrów na obiekt Configuration
 
  Configuration Cube_config;
 
@@ -153,7 +153,7 @@ void XMLInterp4Config::ProcessCubeAttrs(const xercesc::Attributes  &rAttrs)
  }
 
  //-----------------------------------------------------------------------------
- // Wyświetlenie nazw atrybutów i ich "wartości"
+ // Wyświetlenie gotowego obiektu Configuration
  //
  Cube_config.print();
 }
