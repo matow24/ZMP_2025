@@ -118,17 +118,11 @@ void XMLInterp4Config::ProcessCubeAttrs(const xercesc::Attributes  &rAttrs)
  }
 
  //-----------------------------------------------------------------------------
- // Wyświetlenie nazw atrybutów i ich "wartości"
- //
- cout << " Atrybuty:" << endl;
- cout << v_sAttr.at(0).name << " = " << v_sAttr.at(0).value << endl;
-//  for (auto& a : v_sAttr)
-//         std::cout << a.name << " = \"" << a.value << "\"\n";
+ // Przetwarzanie wartości parametrów
 
- //-----------------------------------------------------------------------------
- // Przetwarzanie wartości parametrów na Vector3D
+ Configuration Cube_config;
 
- std::vector<Vector3D> all_params;
+ Cube_config.Name = v_sAttr.at(0).value;
  // Zacznij od 1, by pominąć Name
  for( std::vector<attribute_t>::iterator i = v_sAttr.begin()+1; i != v_sAttr.end(); i++ ){
 
@@ -141,10 +135,27 @@ void XMLInterp4Config::ProcessCubeAttrs(const xercesc::Attributes  &rAttrs)
     if (IStrm.fail()) {
       cerr << " Blad!!!" << endl;
     } else {
-        all_params.push_back(params);
-        cout << (*i).name << " = " << params << endl;
+
+      if((*i).name == "Shift")
+        Cube_config.Shift = params;
+      else if((*i).name == "Scale")
+        Cube_config.Scale = params;
+      else if((*i).name == "RotXYZ_deg")
+        Cube_config.RotXYZ_deg = params;
+      else if((*i).name == "Trans_m")
+        Cube_config.Trans_m = params;
+      else if((*i).name == "RGB")
+        Cube_config.RGB = params;
+      else{
+        cerr << " Ostrzezenie: nieznany parametr: " << (*i).name << endl;
+      }
     }
  }
+
+ //-----------------------------------------------------------------------------
+ // Wyświetlenie nazw atrybutów i ich "wartości"
+ //
+ Cube_config.print();
 }
 
 
