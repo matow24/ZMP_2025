@@ -2,6 +2,7 @@
 #define XMLINTERP4ACTIONS_HH
 
 #include <string>
+#include <map>
 #include <xercesc/util/XMLString.hpp>
 //#include <xercesc/sax2/XMLReaderFactory.hpp>
 #include <xercesc/util/PlatformUtils.hpp>

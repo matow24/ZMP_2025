@@ -74,6 +74,7 @@ void XMLInterp4Config::ProcessLibAttrs(const xercesc::Attributes  &rAttrs)
  cout << "  Nazwa biblioteki: " << sLibName << endl;
 
  // Tu trzeba wpisać własny kod ...
+ // Otwórz bibliotekę ?
 
  xercesc::XMLString::release(&sParamName);
  xercesc::XMLString::release(&sLibName);
@@ -93,91 +94,57 @@ void XMLInterp4Config::ProcessCubeAttrs(const xercesc::Attributes  &rAttrs)
  }
 
  /*
-  *  Tutaj pobierane sa nazwy pierwszego i drugiego atrybutu.
-  *  Sprawdzamy, czy na pewno jest to Name i Value.
+  *  Tutaj pobierane sa atrybuty.
   */
-
- char* sName_Name  = xercesc::XMLString::transcode(rAttrs.getQName(0));
- char* sName_Shift = xercesc::XMLString::transcode(rAttrs.getQName(1));
- char* sName_Scale = xercesc::XMLString::transcode(rAttrs.getQName(2));
-
  XMLSize_t  Index = 0;
- char* sValue_Name    = xercesc::XMLString::transcode(rAttrs.getValue(Index));
- char* sValue_Shift   = xercesc::XMLString::transcode(rAttrs.getValue(1));
- char* sValue_Scale   = xercesc::XMLString::transcode(rAttrs.getValue(2));
+ std::vector<attribute_t> v_sAttr;
 
-//  XMLSize_t  Index = 0;
-//  std::vector<char*> v_sValue;
-//  std::vector<char*> v_sName;
-//  while() {
-//   v_sName.push_back(xercesc::XMLString::transcode(rAttrs.getQName(Index)));
-//   v_sValue.push_back(xercesc::XMLString::transcode(rAttrs.getValue(Index++)));
+ while(Index < rAttrs.getLength()) {
+  char* name  = xercesc::XMLString::transcode(rAttrs.getQName(Index));
+  char* value = xercesc::XMLString::transcode(rAttrs.getValue(Index));
+  attribute_t attr{ name, value };
+
+  xercesc::XMLString::release(&name);
+  xercesc::XMLString::release(&value);
+
+  v_sAttr.push_back(attr);
+  Index++;
  }
 
+ // Sprawdzamy, czy na pewno Name jest pierwsze.
+ if(v_sAttr.at(0).name != "Name") {
+    cerr << "Blad atrybutow \"Cube\": atrybut Name nie jest pierwszy" << endl;
+    exit(1);
+ }
 
  //-----------------------------------------------------------------------------
  // Wyświetlenie nazw atrybutów i ich "wartości"
  //
- cout << " Atrybuty:" << endl
-      << "     " << sName_Name << " = \"" << sValue_Name << "\"" << endl
-      << "     " << sName_Shift << " = \"" << sValue_Shift << "\"" << endl
-      << "     " << sName_Scale << " = \"" << sValue_Scale << "\"" << endl   
-      << endl; 
+ cout << " Atrybuty:" << endl;
+ for (auto& a : v_sAttr)
+        std::cout << a.name << " = \"" << a.value << "\"\n";
+
  //-----------------------------------------------------------------------------
- // Czytanie wartości parametrów
+ // Przetwarzanie wartości parametrów na Vector3D
 
-//  Index = 0;
-//  std::vector<Vector3D> all_params;
-//  while(Index < v_sValue.size()) {
-//   istringstream   IStrm;
-//   IStrm.str(v_sValue[Index++]);
+ std::vector<Vector3D> all_params;
+ // Zacznij od 1, by pominąć Name
+ for( std::vector<attribute_t>::iterator i = v_sAttr.begin()+1; i != v_sAttr.end(); i++ ){
 
-//   Vector3D params;
-//   IStrm >> params;
+    istringstream   IStrm;
+    IStrm.str((*i).value);
 
-//   if (IStrm.fail()) {
-//      cerr << " Blad!!!" << endl;
-//   } else {
-//       all_params.push_back(params);
-//       cout << params << endl;
-//   }
-//  }
- istringstream   IStrm;
+    Vector3D params;
+    IStrm >> params;
 
- IStrm.str(sValue_Shift);
-
- Vector3D  Shift;
- IStrm >> Shift;
-
- if (IStrm.fail()) {
-     cerr << " Blad!!!" << endl;
- } else {
-     cout << Shift << endl;
+    if (IStrm.fail()) {
+      cerr << " Blad!!!" << endl;
+    } else {
+        all_params.push_back(params);
+        cout << params << endl;
+    }
  }
-
- istringstream   IStrmq;
- IStrmq.str(sValue_Scale);
- Vector3D  Scale;
- IStrmq >> Scale;
-
- if (IStrmq.fail()) {
-     cerr << " Blad!!!" << endl;
- } else {
-     cout << Scale << endl;
- }
-
-
- // Tu trzeba wstawić odpowiednio własny kod ...
-
- xercesc::XMLString::release(&sName_Name);
- xercesc::XMLString::release(&sName_Shift);
- xercesc::XMLString::release(&sName_Scale);
- xercesc::XMLString::release(&sValue_Name);
- xercesc::XMLString::release(&sValue_Shift);
- xercesc::XMLString::release(&sValue_Scale);
 }
-
-
 
 
 
