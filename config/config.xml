@@ -1,5 +1,6 @@
   <Config>
    <Plugins>
+      <Lib Name="libInterp4Set.so"/>
       <Lib Name="libInterp4Move.so"/>
       <Lib Name="libInterp4Rotate.so"/>
       <Lib Name="libInterp4Pause.so"/>

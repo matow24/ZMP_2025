@@ -39,7 +39,9 @@ bool PlugInContainer::openPlugin(std::string plugin_name)
   for (const auto& [key, value] : mapa){
     if(klucz == key){
       if(value == nullptr) mapa[klucz] = new LibInterface;
-      if(value != nullptr) if((*value).add_libHandler(plugin_name)) return 1; // blad otwierania biblioteki
+      if(value != nullptr) 
+        if((*value).add_libHandler(plugin_name)) 
+            return 1; // blad otwierania biblioteki
       return 0;
     }
   }
@@ -59,6 +61,7 @@ AbstractInterp4Command* PlugInContainer::getCmd(std::string klucz)
       else break;
     }
   }
+  cerr << "!!! Blad: getCmd: Nie znaleziono polecenia " << klucz << endl;
   return nullptr;
 }
 

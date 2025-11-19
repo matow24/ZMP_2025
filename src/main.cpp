@@ -25,11 +25,12 @@ int main (int argc, char* args[])
   }
   cout << "Zakonczono otwieranie bibliotek" <<endl;
   
-  AbstractInterp4Command *pSetCmd = bazaPluginow.getCmd("Set");
-  if(pSetCmd==nullptr) 
+  AbstractInterp4Command *pSetCmd = bazaPluginow.getCmd("Move");
+  if(pSetCmd==nullptr) {
+    cerr << "!!! Blad: stworzona wtyczka jest pusta" << endl;
     return 1;
-  cout << " Utworzono wtyczke" <<endl;
-
+  }
+    
   // exec zadane polecenia
   cout << endl;
   cout << pSetCmd->GetCmdName() << endl;

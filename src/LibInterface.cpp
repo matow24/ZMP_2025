@@ -9,7 +9,6 @@ LibInterface::LibInterface() {
 LibInterface::~LibInterface()
 {
   if(_libHandler != nullptr) {
-    cerr << "!!! Zamkniecie wtyczki!!!" << endl;
     dlclose(_libHandler);
   }
 }
