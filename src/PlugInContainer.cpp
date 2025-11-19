@@ -7,10 +7,10 @@ using namespace std;
 
 PlugInContainer::PlugInContainer()
 {
-  mapa["libInterp4Set.so"] = new LibInterface;
-  mapa["libInterp4Move.so"] = new LibInterface;
-  mapa["libInterp4Rotate.so"] = new LibInterface;
-  mapa["libInterp4Pause.so"] = new LibInterface;
+  mapa["Set"] = new LibInterface;
+  mapa["Move"] = new LibInterface;
+  mapa["Rotate"] = new LibInterface;
+  mapa["Pause"] = new LibInterface;
 }
 
 PlugInContainer::~PlugInContainer()
@@ -33,15 +33,16 @@ bool PlugInContainer::openPlugin(std::string plugin_name)
 {
   // nazwa biblioteki: libInterp4XXXXX.so
   // zostawiamy XXXXX
-  // std::string klucz = plugin_name.substr(10);
-  // for(int i=0; i<3; i++) klucz.pop_back();
+  std::string klucz = plugin_name.substr(10);
+  for(int i=0; i<3; i++) klucz.pop_back();
 
   for (const auto& [key, value] : mapa){
-    if(plugin_name == key){
+    if(klucz == key){
       if((*value).add_libHandler(plugin_name)) return 1; // blad otwierania biblioteki
       return 0;
     }
   }
+  std::cerr << "!!! Nie znaleziono polecenia " << klucz <<  std::endl;
   std::cerr << "!!! Nie znaleziono biblioteki " << plugin_name <<  std::endl;
   return 1;
 }
