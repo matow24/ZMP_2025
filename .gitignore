@@ -1,6 +1,9 @@
 # VS Code folder
 .vscode
 
+#Preprocesor files
+*.pp
+
 # Prerequisites
 *.d
 
