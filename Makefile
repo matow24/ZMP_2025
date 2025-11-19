@@ -20,8 +20,8 @@ CPPFLAGS=-Wall -pedantic -std=c++17 -Iinc
 LDFLAGS=-Wall
 
 
-interp: obj/main.o obj/PlugInContainer.o obj/LibInterface.o obj/xmlinterp.o
-	g++ ${LDFLAGS} -o interp  obj/main.o obj/PlugInContainer.o obj/LibInterface.o obj/xmlinterp.o -ldl -lxerces-c
+interp: obj/main.o obj/PlugInContainer.o obj/LibInterface.o obj/xmlinterp.o obj/preprocesorCmd.o
+	g++ ${LDFLAGS} -o interp  obj/main.o obj/PlugInContainer.o obj/LibInterface.o obj/xmlinterp.o obj/preprocesorCmd.o -ldl -lxerces-c
 
 
 obj/main.o: src/main.cpp inc/AbstractInterp4Command.hh inc/AbstractScene.hh\
@@ -36,6 +36,9 @@ obj/LibInterface.o: src/LibInterface.cpp inc/LibInterface.hh inc/AbstractInterp4
 
 obj/xmlinterp.o: src/xmlinterp.cpp inc/xmlinterp.hh
 	g++ -c ${CPPFLAGS} -o obj/xmlinterp.o src/xmlinterp.cpp
+
+obj/preprocesorCmd.o: src/preprocesorCmd.cpp
+	g++ -c ${CPPFLAGS} -o obj/preprocesorCmd.o src/preprocesorCmd.cpp
 
 doc:
 	cd dox; make

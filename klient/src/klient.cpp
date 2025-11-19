@@ -47,9 +47,9 @@ int Send(int Sk2Server, const char *sMesg)
 
 
 /*!
- * \brief Ilość stanów każdego z obiektów.
+ * \brief Liczba stanów każdego z obiektów.
  *
- * Ilość stanów każdego z obiektów.
+ * Liczba stanów każdego z obiektów.
  * Podział na kolejne stany obiektów wykorzystywany jest
  * do animacji ruchu obiektów.
  */

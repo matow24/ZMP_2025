@@ -45,7 +45,7 @@ bool PlugInContainer::openPlugin(std::string plugin_name)
       return 0;
     }
   }
-  std::cerr << "!!! Nie znaleziono polecenia " << klucz <<  std::endl;
+  std::cerr << "!!! Nieznane polecenie " << klucz <<  std::endl;
   // sprawdź czy taka biblioteka istnieje i dodaj do mapy
   // ...
   std::cerr << "!!! Nie znaleziono biblioteki " << plugin_name <<  std::endl;
@@ -61,7 +61,7 @@ AbstractInterp4Command* PlugInContainer::getCmd(std::string klucz)
       else break;
     }
   }
-  cerr << "!!! Blad: getCmd: Nie znaleziono polecenia " << klucz << endl;
+  cerr << "!!! getCmd: Nie znaleziono polecenia " << klucz << endl;
   return nullptr;
 }
 
