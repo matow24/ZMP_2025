@@ -24,6 +24,7 @@ using namespace xercesc;
  */
 XMLInterp4Config::XMLInterp4Config(Configuration &rConfig)
 {
+  pConfig = &rConfig;
 }
 
 
@@ -74,7 +75,7 @@ void XMLInterp4Config::ProcessLibAttrs(const xercesc::Attributes  &rAttrs)
  cout << "  Nazwa biblioteki: " << sLibName << endl;
 
  // Tu trzeba wpisać własny kod ...
- // Otwórz bibliotekę ?
+ pConfig->sLibNames.push_back(sLibName);
 
  xercesc::XMLString::release(&sParamName);
  xercesc::XMLString::release(&sLibName);
@@ -97,12 +98,12 @@ void XMLInterp4Config::ProcessCubeAttrs(const xercesc::Attributes  &rAttrs)
   *  Tutaj pobierane sa atrybuty.
   */
  XMLSize_t  Index = 0;
- std::vector<attribute_t> v_sAttr;
+ std::vector<attribute_str> v_sAttr;
 
  while(Index < rAttrs.getLength()) {
   char* name  = xercesc::XMLString::transcode(rAttrs.getQName(Index));
   char* value = xercesc::XMLString::transcode(rAttrs.getValue(Index));
-  attribute_t attr{ name, value };
+  attribute_str attr{ name, value };
 
   xercesc::XMLString::release(&name);
   xercesc::XMLString::release(&value);
@@ -118,13 +119,13 @@ void XMLInterp4Config::ProcessCubeAttrs(const xercesc::Attributes  &rAttrs)
  }
 
  //-----------------------------------------------------------------------------
- // Przetwarzanie wartości parametrów na obiekt Configuration
+ // Przetwarzanie wartości parametrów na obiekt ObjectFromXML
 
- Configuration Cube_config;
+ ObjectFromXML Cube_config;
 
  Cube_config.Name = v_sAttr.at(0).value;
  // Zacznij od 1, by pominąć Name
- for( std::vector<attribute_t>::iterator i = v_sAttr.begin()+1; i != v_sAttr.end(); i++ ){
+ for( std::vector<attribute_str>::iterator i = v_sAttr.begin()+1; i != v_sAttr.end(); i++ ){
 
     istringstream   IStrm;
     IStrm.str((*i).value);
@@ -152,10 +153,13 @@ void XMLInterp4Config::ProcessCubeAttrs(const xercesc::Attributes  &rAttrs)
     }
  }
 
+ // Wyświetlenie gotowego obiektu ObjectFromXML
+  //Cube_config.print();
+
  //-----------------------------------------------------------------------------
- // Wyświetlenie gotowego obiektu Configuration
+ // Zapisanie gotowego obiektu ObjectFromXML do Configuration
  //
- Cube_config.print();
+ pConfig->objects.push_back(Cube_config);
 }
 
 

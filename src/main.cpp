@@ -10,13 +10,23 @@ using namespace xercesc;
 
 int main (int argc, char* args[]) 
 {
+  /***** Etap 2 *****/
+  Configuration   Config;
+
+  if (!ReadFile("config/config.xml",Config)) return 1;
+
+  /***** Etap 1 *****/
   PlugInContainer bazaPluginow;
-  bazaPluginow.openPlugin("Set");
-  bazaPluginow.openPlugin("Move");
-  bazaPluginow.openPlugin("Rotate");
-  bazaPluginow.openPlugin("Pause");
+
+  for( int i = 0; i<Config.sLibNames.size(); i++){
+    if(bazaPluginow.openPlugin(Config.sLibNames.at(i))) 
+      return 1;
+
+    cout << "Otwarto bibliotekę " << Config.sLibNames.at(i) <<endl;
+  }
+  cout << " Zakonczono otwieranie bibliotek" <<endl;
   
-  AbstractInterp4Command *pSetCmd = bazaPluginow.getCmd("Set");
+  AbstractInterp4Command *pSetCmd = bazaPluginow.getCmd("libInterp4Set.so");
   if(pSetCmd==nullptr) 
     return 1;
 
@@ -33,8 +43,5 @@ int main (int argc, char* args[])
   delete pSetCmd;
 
 
-  /***** Etap 2 *****/
-  Configuration   Config;
-
-  if (!ReadFile("config/config.xml",Config)) return 1;
+  
 }

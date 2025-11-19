@@ -2,7 +2,6 @@
 #define XMLINTERP4ACTIONS_HH
 
 #include <string>
-#include <map>
 #include <xercesc/util/XMLString.hpp>
 //#include <xercesc/sax2/XMLReaderFactory.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
@@ -74,17 +73,18 @@ class XMLInterp4Config : public xercesc::DefaultHandler {
      * \brief Wykonuje operacje związane z danym elementem XML
      */
     void WhenStartElement( const std::string&             rElemName,
-		           const xercesc::Attributes&     rAttrs
+		                       const xercesc::Attributes&     rAttrs
                          );
     /*!
-     * \brief Analizuje atrybuty i  odpwiednio je interpretuje
+     * \brief Analizuje atrybuty obiektu Lib i odpwiednio je interpretuje
      */
     void ProcessLibAttrs(const xercesc::Attributes&   rAttrs);
     /*!
-     * \brief Analizuje atrybuty i odpwiednio je interpretuje
+     * \brief Analizuje atrybuty obiektu Cube i odpwiednio je interpretuje
      */
     void ProcessCubeAttrs(const xercesc::Attributes&   rAttrs); 
   private:
+    Configuration* pConfig = nullptr;
 };
 
 bool ReadFile(const char* sFileName, Configuration &rConfig);

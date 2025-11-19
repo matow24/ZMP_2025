@@ -11,11 +11,10 @@ LibInterface::~LibInterface()
 
 bool LibInterface::add_libHandler(std::string cmdName)
 {
-  std::string libName = "libInterp4" + cmdName + ".so"; 
-  _libHandler = dlopen(libName.c_str(), RTLD_LAZY);
+  _libHandler = dlopen(cmdName.c_str(), RTLD_LAZY);
   
   if (!_libHandler) {
-    cerr << "!!! Brak biblioteki: " << libName.c_str() << endl;
+    cerr << "!!! Brak biblioteki: " << cmdName.c_str() << endl;
     return 1;
   }
 
