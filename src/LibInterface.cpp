@@ -4,15 +4,13 @@ using namespace std;
 
 LibInterface::LibInterface() { 
   _libHandler = nullptr;
-  cerr << "!!! Tworzenie obiektu LibInterface!!! ==============" << endl;
  }
 
 LibInterface::~LibInterface()
 {
   if(_libHandler != nullptr) {
-    cerr << "!!! Zamkniecie wtyczki!!! ____ poczatek _____________" << endl;
+    cerr << "!!! Zamkniecie wtyczki!!!" << endl;
     dlclose(_libHandler);
-    cerr << "!!! Zamkniecie wtyczki!!! _____ koniec_______________" << endl;
   }
 }
 
@@ -45,7 +43,6 @@ bool LibInterface::createCmd(){
 AbstractInterp4Command* LibInterface::get_pCreate_Cmd()
 {
   if(createCmd()) {
-    cerr << "Blad tworzenie komendy " <<endl;
     return nullptr;
   }
    
