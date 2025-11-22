@@ -66,13 +66,13 @@ bool Interp4Rotate::ExecCmd( AbstractScene      &rScn,
     return false;
   }
 
-  int step_time; //co ile s wysylany jest update pozycji
+  int step_time_s; //co ile s wysylany jest update pozycji
   if(_axis == "X") {
     int init_rot_deg = rScn.FindMobileObj(sMobObjName)->GetAng_Roll_deg();
     if(_rot_speed_degS < 0) _rot_deg *= (-1);
-    
+
     while(rScn.FindMobileObj(sMobObjName)->GetAng_Roll_deg() != init_rot_deg + _rot_deg) {
-      rScn.FindMobileObj(sMobObjName)->SetAng_Roll_deg(init_rot_deg + _rot_speed_degS*step_time);
+      rScn.FindMobileObj(sMobObjName)->SetAng_Roll_deg(init_rot_deg + _rot_speed_degS*step_time_s);
     }
   }
   else if(_axis == "Y"){

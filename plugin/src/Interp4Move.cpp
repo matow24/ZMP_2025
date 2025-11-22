@@ -66,6 +66,16 @@ bool Interp4Move::ExecCmd( AbstractScene      &rScn,
     return false;
   }
   // rScn.FindMobileObj(sMobObjName)->SetPosition_m(/*wektor ruchu*/);
+
+  Vector3D init_pos = rScn.FindMobileObj(sMobObjName)->GetPosition_m();
+  int step_time_s;
+  
+  while((rScn.FindMobileObj(sMobObjName)->GetPosition_m() - init_pos).Length() != _path_len) {
+    Vector3D new_Position = rScn.FindMobileObj(sMobObjName)->GetPosition_m();
+    new_Position[0] += (_speed_mmS/1000.0*step_time_s); //przesun X+
+
+    rScn.FindMobileObj(sMobObjName)->SetPosition_m(new_Position);
+  }
   
   return true;
 }
