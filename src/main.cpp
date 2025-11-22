@@ -23,19 +23,41 @@ bool openPluginsFromXML(PlugInContainer &bazaPluginow, Configuration &Config) {
     if(bazaPluginow.openPlugin(Config.sLibNames.at(i))) 
       return false;
 
-    cout << " Otwarto bibliotekę " << Config.sLibNames.at(i) <<endl;
+    cout << " Otwarto bibliotekę " << Config.sLibNames.at(i) << endl;
   }
-  cout << "Zakonczono otwieranie bibliotek" <<endl;
+  cout << "Zakonczono otwieranie bibliotek" << endl;
+  return true;
+}
+
+bool isFileType(const char* filetype, const std::string filename) {
+  if(filename.substr(filename.length()-3) == filetype) 
+      return true;
+  return false;
+}
+
+bool checkArgs(int argc, char* args[]) {
+  if (argc < 3) {
+    std::cerr << "!!! Brak argumentow wywolania: .cmd albo .xml\n";
+    return false;
+  }
+
+  if(isFileType("cmd", args[1])) {
+     cerr << "!!! Blad argumentow wywolania: pierwszy plik nie jest .cmd" << endl;
+     return false;
+  }
+
+  if(isFileType("xml", args[2])) {
+     cerr << "!!! Blad argumentow wywolania: drugi plik nie jest .xml" << endl;
+     return false;
+  }
+
   return true;
 }
 
 
 int main (int argc, char* args[]) 
 {
-  // if (argc < 3) {
-  //   std::cerr << "!!! Brak argumentow wywolania: .cmd albo .xml\n";
-  //   return 1;
-  // }
+  // if(!checkArgs(argc, args)) return 1;
 
   // int preprocessCmd = preprocessCmdFile(&args[1]);
   // if(preprocessCmd) {
