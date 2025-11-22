@@ -61,9 +61,32 @@ bool Interp4Rotate::ExecCmd( AbstractScene      &rScn,
   /*
    *  Tu trzeba napisać odpowiedni kod.
    */
-  // rScn.FindMobileObj(sMobObjName)->SetAng_Roll_deg(_Roll_Speed_mmS);
-  // rScn.FindMobileObj(sMobObjName)->SetAng_Pitch_deg(_Pitch_Speed_mmS);
-  // rScn.FindMobileObj(sMobObjName)->SetAng_Yaw_deg(_Yaw_Speed_mmS);
+  if(_rot_deg < 0) {
+    std::cerr << "!!! " << _name << ": kat obrotu nie moze byc ujemny. Aby zrobic obrot w prawo, zadaj ujemna predkosc katowa" <<std::endl;
+    return false;
+  }
+
+  int step_time; //co ile s wysylany jest update pozycji
+  if(_axis == "X") {
+    int init_rot_deg = rScn.FindMobileObj(sMobObjName)->GetAng_Roll_deg();
+    if(_rot_speed_degS < 0) _rot_deg *= (-1);
+    
+    while(rScn.FindMobileObj(sMobObjName)->GetAng_Roll_deg() != init_rot_deg + _rot_deg) {
+      rScn.FindMobileObj(sMobObjName)->SetAng_Roll_deg(init_rot_deg + _rot_speed_degS*step_time);
+    }
+  }
+  else if(_axis == "Y"){
+    rScn.FindMobileObj(sMobObjName)->SetAng_Pitch_deg(_rot_speed_degS);
+
+  }
+  else if(_axis == "Z") {
+    rScn.FindMobileObj(sMobObjName)->SetAng_Yaw_deg(_rot_speed_degS);
+
+  }
+  else {
+    std::cerr << "!!! " << _name << ": nie ma takiej osi: " <<_axis << ", nie wykonano obrotu " <<std::endl;
+    return false;
+  }
 
   
   return true;

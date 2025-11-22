@@ -23,7 +23,6 @@ int preprocessCmdFile(const char* sFileName)
         return 3;
     }
 
-    // --- W tym miejscu wczytujesz gotowy tekst do własnego parsera ---
     std::cout << "=== Plik po preprocessingu ===\n";
     std::cout << f.rdbuf() << "\n";
 

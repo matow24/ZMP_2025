@@ -18,19 +18,15 @@ int preprocessCmdFile(char** argv);
  * \retval 2 - błąd czytania pliku XML.
  * \retval 3 - błąd otwierania biblioteki.
  */
-int openPluginsFromXML(PlugInContainer &bazaPluginow, const char* XML_file_name) {
-  Configuration   Config;
-
-  if (!ReadFile(XML_file_name, Config)) return 2;
-
+bool openPluginsFromXML(PlugInContainer &bazaPluginow, Configuration &Config) {
   for( int i = 0; i<Config.sLibNames.size(); i++){
     if(bazaPluginow.openPlugin(Config.sLibNames.at(i))) 
-      return 3;
+      return false;
 
     cout << " Otwarto bibliotekę " << Config.sLibNames.at(i) <<endl;
   }
   cout << "Zakonczono otwieranie bibliotek" <<endl;
-  return 0;
+  return true;
 }
 
 
@@ -47,16 +43,19 @@ int main (int argc, char* args[])
   //   return preprocessCmd;
   // }
 
+  Configuration   Config;
+  if (!ReadFile("config/config.xml", Config))  return 4;
+  // if (!ReadFile(args[2], Config))   return 2;
+
   PlugInContainer bazaPluginow;
-  int openPluginsFromXML_result = openPluginsFromXML(bazaPluginow, "config/config.xml");
-  if(openPluginsFromXML_result) return openPluginsFromXML_result;
+  if(!openPluginsFromXML(bazaPluginow, Config)) return 5;
 
   /************************* */
   
   AbstractInterp4Command *pSetCmd = bazaPluginow.getCmd("Move");
   if(pSetCmd==nullptr) {
     cerr << "!!! Blad: stworzona wtyczka jest pusta" << endl;
-    return 4;
+    return 6;
   }
     
   // exec zadane polecenia

@@ -61,6 +61,10 @@ bool Interp4Move::ExecCmd( AbstractScene      &rScn,
   /*
    *  Tu trzeba napisać odpowiedni kod.
    */
+  if(_path_len < 0) {
+    std::cerr << "!!! " << _name << ": droga nie moze byc ujemna" <<std::endl;
+    return false;
+  }
   // rScn.FindMobileObj(sMobObjName)->SetPosition_m(/*wektor ruchu*/);
   
   return true;
