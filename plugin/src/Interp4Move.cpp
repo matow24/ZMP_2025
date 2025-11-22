@@ -65,7 +65,6 @@ bool Interp4Move::ExecCmd( AbstractScene      &rScn,
     std::cerr << "!!! " << _name << ": droga nie moze byc ujemna" <<std::endl;
     return false;
   }
-  // rScn.FindMobileObj(sMobObjName)->SetPosition_m(/*wektor ruchu*/);
 
   Vector3D init_pos = rScn.FindMobileObj(sMobObjName)->GetPosition_m();
   int step_time_s;
