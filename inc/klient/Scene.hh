@@ -2,6 +2,8 @@
 #define SCENE_HH__
 
 #include <vector>
+#include <mutex>
+
 #include "AccessControl.hh"
 #include "GeomObj.hh"
 
@@ -57,7 +59,7 @@ const char* Cmds4Obj3[STATES_NUMBER] = {
 
 
 /*!
- * \brief Namiastka sceny z prostą kolekcją trzech wizualizowanych obiektów.
+ * \brief 
  */
 class Scene: public AccessControl {
   public:

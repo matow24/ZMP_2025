@@ -5,7 +5,6 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <thread>
-#include <mutex>
 #include "AccessControl.hh"
 #include "Port.hh"
 
@@ -72,7 +71,7 @@ bool OpenConnection(int &rSocket)
  * \param[in] pAccCtrl - wskaźnik na obiekt, poprzez który przekazywana jest informacja
  *                   o zmianie na scenie, zaś w trakcie dokonywania zmianay
  *                   zamykany jest dostęp do całej sceny.
- * \retval true - Jeśli dokonan zosała zmiana stanu wszystkich obiektów.
+ * \retval true - Jeśli dokonana zosała zmiana stanu wszystkich obiektów.
  * \retval false - w przypadku przeciwnym.
  */
 bool ChangeState(Scene &Scn) //GeomObject *pObj, AccessControl  *pAccCtrl)
@@ -80,8 +79,9 @@ bool ChangeState(Scene &Scn) //GeomObject *pObj, AccessControl  *pAccCtrl)
   bool Changed;
 
   while (true) {
-    Scn.LockAccess(); // Zamykamy dostęp do sceny, gdy wykonujemy
-                            // modyfikacje na obiekcie.
+    // Zamykamy dostęp do sceny, gdy wykonujemy modyfikacje na obiekcie.
+    Scn.LockAccess(); 
+    
     for (GeomObject &rObj : Scn._Container4Objects) {
        if (!(Changed = rObj.IncStateIndex())) { Scn.UnlockAccess();  return false; }
     }
