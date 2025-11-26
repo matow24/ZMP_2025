@@ -7,7 +7,8 @@
 using namespace std;
 using namespace xercesc;
 
-int preprocessCmdFile(const char* argv);
+bool preprocessCmdFile(const char* argv);
+bool openCommandFile(std::string sFileName);
 
 /*!
  * Czyta z pliku opis poleceń i dodaje je do listy komend,
@@ -58,24 +59,22 @@ bool checkArgs(int argc, char* args[]) {
 
 int main (int argc, char* args[]) 
 {
-  if(!checkArgs(argc, args)) return 1;
+  if (!checkArgs(argc, args)) return 1;
 
-  int preprocessCmd = preprocessCmdFile(args[1]);
-  if(preprocessCmd) {
-    cerr << "!!! Blad preprocesora .cmd" << endl;
-    return preprocessCmd;
-  }
+  if (!preprocessCmdFile(args[1])) return 2;
 
   Configuration   Config;
-  if(!ReadFile(args[2], Config))   return 4;
+  if (!ReadFile(args[2], Config))   return 3;
 
   PlugInContainer bazaPluginow;
-  if(!openPluginsFromXML(bazaPluginow, Config))  return 5;
+  if (!openPluginsFromXML(bazaPluginow, Config))  return 4;
 
-  // Utwórz GeomObj dla każdego obiektu zczytanego z XMLa
-  for(int i = 0; i<Config.objects.size(); i++) {
-    Config.objects.at(i);
-  }
+  // // Utwórz GeomObj dla każdego obiektu zczytanego z XMLa
+  // for(int i = 0; i<Config.objects.size(); i++) {
+  //   Config.objects.at(i);
+  // }
+
+  if(!openCommandFile(args[1])) return 5;
 
   /************************* */
   
