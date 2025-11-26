@@ -2,7 +2,7 @@
 #include <dlfcn.h>
 #include <cassert>
 #include "PlugInContainer.hh"
-#include "xmlinterp.hh"
+#include "XML/xmlinterp.hh"
 
 using namespace std;
 using namespace xercesc;
@@ -15,9 +15,8 @@ bool openCommandFile(std::string sFileName);
  * które robot musi wykonać.
  * \param XML_file_name - (\b we.) nazwa pliku XML z opisem poleceń.
  * \param bazaPluginow - (\b we.) zarządca wczytywanych bibliotek.
- * \retval 0 - jeśli wczytanie zostało zrealizowane poprawnie,
- * \retval 2 - błąd czytania pliku XML.
- * \retval 3 - błąd otwierania biblioteki.
+ * \retval true - jeśli wczytanie zostało zrealizowane poprawnie,
+ * \retval false - w przeciwnym wypadku
  */
 bool openPluginsFromXML(PlugInContainer &bazaPluginow, Configuration &Config) {
   for( int i = 0; i<Config.sLibNames.size(); i++){
@@ -38,13 +37,12 @@ bool isFileType(const char* filetype, const std::string filename) {
 
 bool checkArgs(int argc, char* args[]) {
   if (argc < 3) {
-    std::cerr << "!!! Brak argumentow wywolania: .cmd albo .xml\n";
+    std::cerr << "!!! Brak argumentow wywolania: .cmd albo .xml" << endl;
     return false;
   }
 
   if(isFileType(".cmd", args[1])) {
      cerr << "!!! Blad argumentow wywolania: " << args[1] << " nie jest .cmd" << endl;
-
      return false;
   }
 
@@ -69,10 +67,10 @@ int main (int argc, char* args[])
   PlugInContainer bazaPluginow;
   if (!openPluginsFromXML(bazaPluginow, Config))  return 4;
 
-  // // Utwórz GeomObj dla każdego obiektu zczytanego z XMLa
-  // for(int i = 0; i<Config.objects.size(); i++) {
-  //   Config.objects.at(i);
-  // }
+  // Utwórz GeomObj dla każdego obiektu zczytanego z XMLa
+  for(int i = 0; i<Config.objects.size(); i++) {
+    Config.objects.at(i);
+  }
 
   if(!openCommandFile(args[1])) return 5;
 
