@@ -26,7 +26,7 @@ int preprocessCmdFile(const char* sFileName)
     std::cout << "=== Plik po preprocessingu ===\n";
     std::cout << f.rdbuf() << "\n";
 
-    // parse(output); // <- tu wywołujesz swój parser
+    // parsowanie output
 
     return 0;
 }

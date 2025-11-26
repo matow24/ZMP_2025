@@ -7,7 +7,7 @@
 using namespace std;
 using namespace xercesc;
 
-int preprocessCmdFile(char** argv);
+int preprocessCmdFile(const char* argv);
 
 /*!
  * Czyta z pliku opis poleceń i dodaje je do listy komend,
@@ -30,7 +30,7 @@ bool openPluginsFromXML(PlugInContainer &bazaPluginow, Configuration &Config) {
 }
 
 bool isFileType(const char* filetype, const std::string filename) {
-  if(filename.substr(filename.length()-3) == filetype) 
+  if(filename.substr(filename.length()-4).c_str() == filetype) 
       return true;
   return false;
 }
@@ -41,13 +41,14 @@ bool checkArgs(int argc, char* args[]) {
     return false;
   }
 
-  if(isFileType("cmd", args[1])) {
-     cerr << "!!! Blad argumentow wywolania: pierwszy plik nie jest .cmd" << endl;
+  if(isFileType(".cmd", args[1])) {
+     cerr << "!!! Blad argumentow wywolania: " << args[1] << " nie jest .cmd" << endl;
+
      return false;
   }
 
-  if(isFileType("xml", args[2])) {
-     cerr << "!!! Blad argumentow wywolania: drugi plik nie jest .xml" << endl;
+  if(isFileType(".xml", args[2])) {
+     cerr << "!!! Blad argumentow wywolania: " << args[2] << " nie jest .xml" << endl;
      return false;
   }
 
@@ -57,20 +58,24 @@ bool checkArgs(int argc, char* args[]) {
 
 int main (int argc, char* args[]) 
 {
-  // if(!checkArgs(argc, args)) return 1;
+  if(!checkArgs(argc, args)) return 1;
 
-  // int preprocessCmd = preprocessCmdFile(&args[1]);
-  // if(preprocessCmd) {
-  //   cerr << "!!! Blad preprocesora .cmd" << endl;
-  //   return preprocessCmd;
-  // }
+  int preprocessCmd = preprocessCmdFile(args[1]);
+  if(preprocessCmd) {
+    cerr << "!!! Blad preprocesora .cmd" << endl;
+    return preprocessCmd;
+  }
 
   Configuration   Config;
-  if (!ReadFile("config/config.xml", Config))  return 4;
-  // if (!ReadFile(args[2], Config))   return 2;
+  if(!ReadFile(args[2], Config))   return 4;
 
   PlugInContainer bazaPluginow;
-  if(!openPluginsFromXML(bazaPluginow, Config)) return 5;
+  if(!openPluginsFromXML(bazaPluginow, Config))  return 5;
+
+  // Utwórz GeomObj dla każdego obiektu zczytanego z XMLa
+  for(int i = 0; i<Config.objects.size(); i++) {
+    Config.objects.at(i);
+  }
 
   /************************* */
   
