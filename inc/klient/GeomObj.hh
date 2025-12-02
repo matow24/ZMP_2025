@@ -48,10 +48,7 @@ class GeomObject {
    * rozwiązaniu powinna wygenerować odpowiednie polecenie na podstawie
    * przechowywanej informacji o położeniu i orientacji obiektu.
    */
-  const char* GetStateDesc() const
-  {
-    return _Cmd4StatDesc[_StateIdx];
-  }
+  const char* GetStateDesc() const { return _Cmd4StatDesc[_StateIdx];  }
   /*!
    * \brief Zwiększa indeks stanu, o ile aktualny opis nie jest pusty.
    *
