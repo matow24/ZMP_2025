@@ -1,5 +1,5 @@
 #include <xercesc/util/PlatformUtils.hpp>
-#include "xmlinterp.hh"
+#include "XML/xmlinterp.hh"
 #include "Vector3D.hh"
 #include <cassert>
 #include <sstream>

@@ -1,5 +1,5 @@
 __start__: obj __lines_for_space__ interp __plugin__
-	export LD_LIBRARY_PATH="./libs"; ./interp /home/modrowaz/Pulpit/ZMP_2025/przyklad.cmd /home/modrowaz/Pulpit/ZMP_2025/config/config.xml
+	export LD_LIBRARY_PATH="./libs"; ./interp ./przyklad.cmd ./config/config.xml
 
 obj:
 	mkdir obj
