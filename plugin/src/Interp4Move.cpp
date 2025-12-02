@@ -62,7 +62,7 @@ bool Interp4Move::ExecCmd( AbstractScene      &rScn,
    *  Tu trzeba napisać odpowiedni kod.
    */
   if(_path_len < 0) {
-    std::cerr << "!!! " << _name << ": droga nie moze byc ujemna" <<std::endl;
+    std::cerr << "!!! " << _name << ": droga nie moze byc ujemna" << std::endl;
     return false;
   }
 
