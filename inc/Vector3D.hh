@@ -13,4 +13,9 @@
   */
  typedef geom::Vector<double,3>  Vector3D;
 
+ std::ostream& operator<<(std::ostream& out, const Vector3D& vec) {
+    out<<"("<<vec[0]<<","<<vec[1]<<","<<vec[2]<<")";
+    return out;
+  }
+
 #endif

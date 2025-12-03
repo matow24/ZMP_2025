@@ -63,7 +63,7 @@ class MobileObj : public AbstractMobileObj {
     *  zgodnie z ruchem wskazówek zegara wokół osi \e OY.
     *  \return Wartość kąta \e pitch wyrażona w stopniach.
     */
-  double GetAng_Pitch_deg() const  { return this->_rotation[1];  }
+    double GetAng_Pitch_deg() const  { return this->_rotation[1];  }
     /*!
     * \brief Udostępnia wartość kąta \e yaw.
     *
@@ -86,7 +86,7 @@ class MobileObj : public AbstractMobileObj {
     *  Zmienia wartość kąta \e pitch.
     *  \param[in] Ang_Pitch_deg - nowa wartość kąta \e pitch wyrażona w stopniach.
     */
-  void SetAng_Pitch_deg(double Ang_Pitch_deg) { this->_rotation[1] = Ang_Pitch_deg;  }
+    void SetAng_Pitch_deg(double Ang_Pitch_deg) { this->_rotation[1] = Ang_Pitch_deg;  }
     /*!
     * \brief Zmienia wartość kąta \e yaw.
     *
@@ -94,7 +94,13 @@ class MobileObj : public AbstractMobileObj {
     *  \param[in] Ang_Yaw_deg - nowa wartość kąta \e yaw wyrażona w stopniach.
     */
     void SetAng_Yaw_deg(double Ang_Yaw_deg) { this->_rotation[2] = Ang_Yaw_deg;  }
-
+    /*!
+    * \brief Zmienia wartości kątów \e roll, \e pitch i \e yaw.
+    *
+    *  \param[in] rRot - nowa wartość kątów obrotu wyrażona w stopniach.
+    */
+    void SetRotation_deg(const Vector3D &rRot) {  this->_rotation = rRot;  }
+    
     /*!
     * \brief Udostępnia współrzędne aktualnej pozycji obiektu.
     *
@@ -102,7 +108,7 @@ class MobileObj : public AbstractMobileObj {
     * \return Współrzędne aktualnej pozycji obiektu. Przyjmuje się,
     *         że współrzędne wyrażone są w metrach.
     */
-    const Vector3D & GetPositoin_m() const  {  return this->_position;  }
+    const Vector3D & GetPosition_m() const  {  return this->_position;  }
     /*!
     * \brief Zmienia współrzędne aktualnej pozycji obiektu.
     *

@@ -3,6 +3,7 @@
 #include <cassert>
 #include "PlugInContainer.hh"
 #include "XML/xmlinterp.hh"
+#include "MobileObj.hh"
 
 using namespace std;
 using namespace xercesc;
@@ -67,9 +68,20 @@ int main (int argc, char* args[])
   PlugInContainer bazaPluginow;
   if (!openPluginsFromXML(bazaPluginow, Config))  return 4;
 
-  // Utwórz GeomObj dla każdego obiektu zczytanego z XMLa
+  std::vector<MobileObj> Objects;
+  // Utwórz MobileObj dla każdego obiektu zczytanego z XMLa
   for(int i = 0; i<Config.objects.size(); i++) {
+    MobileObj obiekt;
+    obiekt.SetName(Config.objects.at(i).Name.c_str());
+    obiekt.SetPosition_m(Config.objects.at(i).Trans_m);
+    obiekt.SetRotation_deg(Config.objects.at(i).RotXYZ_deg);
+
+
+    //p_p = obiekt.GetAng_Roll_deg()*obiekt.GetAng_Pitch_deg()*obiekt.GetAng_Yaw_deg()*(Config.objects.at(i).Scale*( p +Config.objects.at(i).Shift)) + Config.objects.at(i).Trans_m;
+
     Config.objects.at(i);
+
+    Objects.push_back(obiekt);
   }
 
   if(!openCommandFile(args[1])) return 5;
