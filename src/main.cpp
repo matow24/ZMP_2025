@@ -4,6 +4,8 @@
 #include "PlugInContainer.hh"
 #include "XML/xmlinterp.hh"
 #include "MobileObj.hh"
+#include "klient/klientmain.hh"
+//#include "ComInterface.hh"
 
 using namespace std;
 using namespace xercesc;
@@ -20,7 +22,7 @@ bool openCommandFile(std::string sFileName);
  * \retval false - w przeciwnym wypadku
  */
 bool openPluginsFromXML(PlugInContainer &bazaPluginow, Configuration &Config) {
-  for( int i = 0; i<Config.sLibNames.size(); i++){
+  for( long unsigned int i = 0; i<Config.sLibNames.size(); i++){
     if(bazaPluginow.openPlugin(Config.sLibNames.at(i))) 
       return false;
 
@@ -68,7 +70,15 @@ int main (int argc, char* args[])
   PlugInContainer bazaPluginow;
   if (!openPluginsFromXML(bazaPluginow, Config))  return 4;
 
-  std::vector<MobileObj> Objects;
+  //otwórz połaczenie z serwerem
+  int                 Socket4Sending;   
+  if (!OpenConnection(Socket4Sending)) return 5;
+
+  //ComInterface ComFace;
+
+  // wyczyść scenę i wstaw tam obiekty z XMLa
+
+  /*std::vector<MobileObj> Objects;
   // Utwórz MobileObj dla każdego obiektu zczytanego z XMLa
   for(int i = 0; i<Config.objects.size(); i++) {
     MobileObj obiekt;
@@ -79,12 +89,12 @@ int main (int argc, char* args[])
 
     //p_p = obiekt.GetAng_Roll_deg()*obiekt.GetAng_Pitch_deg()*obiekt.GetAng_Yaw_deg()*(Config.objects.at(i).Scale*( p +Config.objects.at(i).Shift)) + Config.objects.at(i).Trans_m;
 
-    Config.objects.at(i);
+    //Config.objects.at(i);
 
     Objects.push_back(obiekt);
-  }
+  }*/
 
-  if(!openCommandFile(args[1])) return 5;
+  if(!openCommandFile(args[1])) return 6;
 
   /************************* */
   

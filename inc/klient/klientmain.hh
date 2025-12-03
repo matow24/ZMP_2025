@@ -91,7 +91,7 @@ bool ChangeState(Scene &Scn) //GeomObject *pObj, AccessControl  *pAccCtrl)
 
 
 
-int main()
+int klientmain()
 {
   cout << "Port: " << PORT << endl;
   Scene               Scn;
@@ -138,4 +138,6 @@ int main()
   ClientSender.CancelCountinueLooping();
   Thread4Sending.join();
   close(Socket4Sending);
+
+  return 0;
 }

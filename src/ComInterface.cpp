@@ -26,13 +26,13 @@ bool ComInterface::sendCommand(const std::string& cmd){
     return true;
 }
 
-bool ComInterface::AddObj(const std::string& name, const Vector3D& shift, const Vector3D& scale, const Vector3D& trans, const Vector3D& rotXYZ, const Vector3D& RGB) {
-    std::string cmd = getCommand_AddObj(name, shift, scale, trans, rotXYZ, RGB);
+bool ComInterface::AddObj(const std::string& Name, const Vector3D& Shift, const Vector3D& Scale, const Vector3D& Trans_m, const Vector3D& RotXYZ_deg, const Vector3D& RGB) {
+    std::string cmd = getCommand_AddObj(Name, Shift, Scale, Trans_m, RotXYZ_deg, RGB);
     sendCommand(cmd);
 }
 
-bool ComInterface::UpdateObj(const std::string& name, const Vector3D& trans, const Vector3D& rotXYZ) {
-    std::string cmd = getCommand_AddObj(name, trans, rotXYZ);
+bool ComInterface::UpdateObj(const std::string& Name, const Vector3D& Trans_m, const Vector3D& RotXYZ_deg) {
+    std::string cmd = getCommand_UpdateObj(Name, Trans_m, RotXYZ_deg);
     sendCommand(cmd);
 }
 
