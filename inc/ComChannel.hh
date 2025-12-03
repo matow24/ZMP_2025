@@ -25,6 +25,8 @@ class ComChannel : public AbstractComChannel {
 
   public:
 
+  ComChannel(){};
+
   ~ComChannel() {}
   
   /*!

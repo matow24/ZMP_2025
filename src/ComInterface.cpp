@@ -28,36 +28,36 @@ bool ComInterface::sendCommand(const std::string& cmd){
 
 bool ComInterface::AddObj(const std::string& Name, const Vector3D& Shift, const Vector3D& Scale, const Vector3D& Trans_m, const Vector3D& RotXYZ_deg, const Vector3D& RGB) {
     std::string cmd = getCommand_AddObj(Name, Shift, Scale, Trans_m, RotXYZ_deg, RGB);
-    sendCommand(cmd);
+    return sendCommand(cmd);
 }
 
 bool ComInterface::UpdateObj(const std::string& Name, const Vector3D& Trans_m, const Vector3D& RotXYZ_deg) {
     std::string cmd = getCommand_UpdateObj(Name, Trans_m, RotXYZ_deg);
-    sendCommand(cmd);
+    return sendCommand(cmd);
 }
 
 bool ComInterface::Clear() {
-    //return sendCommand("Clear");
+    return sendCommand("Clear");
 
-    const char* msg = "Clear \n";
-    const int socket = this->channel.GetSocket();
+    // const char* msg = "Clear \n";
+    // const int socket = this->channel.GetSocket();
 
-    if( write(socket, msg, strlen(msg)) != strlen(msg) ) {
-        return false;
-    }
+    // if( write(socket, msg, strlen(msg)) != strlen(msg) ) {
+    //     return false;
+    // }
 
-    return true;  
+    // return true;  
 }
 
 bool ComInterface::Close() {
-    //return sendCommand("Close");
+    return sendCommand("Close");
 
-    const char* msg = "Close \n";
-    const int socket = this->channel.GetSocket();
+    // const char* msg = "Close \n";
+    // const int socket = this->channel.GetSocket();
 
-    if( write(socket, msg, strlen(msg)) != strlen(msg) ) {
-        return false;
-    }
+    // if( write(socket, msg, strlen(msg)) != strlen(msg) ) {
+    //     return false;
+    // }
 
-    return true;  
+    // return true;  
 }

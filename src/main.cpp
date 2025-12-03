@@ -74,7 +74,7 @@ int main (int argc, char* args[])
   int                 Socket4Sending;   
   if (!OpenConnection(Socket4Sending)) return 5;
 
-  // ComChannel ComCh;
+  ComChannel ComCh;
   // ComCh.Init(Socket4Sending);
 
   // ComInterface ComFace(ComCh);
