@@ -37,6 +37,8 @@ bool ComInterface::UpdateObj(const std::string& Name, const Vector3D& Trans_m, c
 }
 
 bool ComInterface::Clear() {
+    //return sendCommand("Clear");
+
     const char* msg = "Clear \n";
     const int socket = this->channel.GetSocket();
 
@@ -48,6 +50,8 @@ bool ComInterface::Clear() {
 }
 
 bool ComInterface::Close() {
+    //return sendCommand("Close");
+
     const char* msg = "Close \n";
     const int socket = this->channel.GetSocket();
 

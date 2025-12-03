@@ -17,6 +17,12 @@ class ComInterface
 {
     AbstractComChannel& channel;
 
+    std::string getCommand_AddObj(const std::string& Name,const Vector3D& shift,const Vector3D& scale,const Vector3D& Trans_m,const Vector3D& RotXYZ_deg,const Vector3D& RGB);
+
+    std::string getCommand_UpdateObj(const std::string& Name,const Vector3D& Trans_m,const Vector3D& RotXYZ_deg);
+
+    bool sendCommand(const std::string& cmd);
+
     public:
 
     /*!
@@ -26,11 +32,6 @@ class ComInterface
     */
     ComInterface(AbstractComChannel& _channel);
 
-    std::string getCommand_AddObj(const std::string& Name,const Vector3D& shift,const Vector3D& scale,const Vector3D& Trans_m,const Vector3D& RotXYZ_deg,const Vector3D& RGB);
-
-    std::string getCommand_UpdateObj(const std::string& Name,const Vector3D& Trans_m,const Vector3D& RotXYZ_deg);
-
-    bool sendCommand(const std::string& cmd);
     /*!
     * \brief Funkcja dodająca obiekt do serwera
     * Funkcja dodająca obiekt do serwera

@@ -5,7 +5,7 @@
 #include "XML/xmlinterp.hh"
 #include "MobileObj.hh"
 #include "klient/klientmain.hh"
-//#include "ComInterface.hh"
+#include "ComInterface.hh"
 
 using namespace std;
 using namespace xercesc;
@@ -74,7 +74,10 @@ int main (int argc, char* args[])
   int                 Socket4Sending;   
   if (!OpenConnection(Socket4Sending)) return 5;
 
-  //ComInterface ComFace;
+  // ComChannel ComCh;
+  // ComCh.Init(Socket4Sending);
+
+  // ComInterface ComFace(ComCh);
 
   // wyczyść scenę i wstaw tam obiekty z XMLa
 
