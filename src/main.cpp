@@ -27,8 +27,6 @@ int main (int argc, char* args[])
   ComInterface ComFace(ComCh);
   ComFace.Clear();
 
-  // wyczyść scenę i wstaw tam obiekty z XMLa
-
   //std::vector<MobileObj> Objects;
   // Utwórz MobileObj dla każdego obiektu zczytanego z XMLa
   for(const auto& obj : Config.objects) {
