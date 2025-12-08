@@ -24,9 +24,7 @@ interp: obj/main.o obj/PlugInContainer.o obj/LibInterface.o obj/xmlinterp.o obj/
 	g++ ${LDFLAGS} -o interp  obj/main.o obj/PlugInContainer.o obj/LibInterface.o obj/xmlinterp.o obj/preprocesorCmd.o obj/ComInterface.o -ldl -lxerces-c
 
 
-obj/main.o: src/main.cpp inc/AbstractInterp4Command.hh inc/AbstractScene.hh\
-            inc/AbstractComChannel.hh inc/PlugInContainer.hh inc/ComInterface.hh\
-			inc/klient/klientmain.hh
+obj/main.o: src/main.cpp inc/main.hh
 	g++ -c ${CPPFLAGS} -o obj/main.o src/main.cpp
 
 obj/PlugInContainer.o: src/PlugInContainer.cpp inc/PlugInContainer.hh
@@ -41,7 +39,7 @@ obj/xmlinterp.o: src/xmlinterp.cpp inc/XML/xmlinterp.hh
 obj/preprocesorCmd.o: src/preprocesorCmd.cpp
 	g++ -c ${CPPFLAGS} -o obj/preprocesorCmd.o src/preprocesorCmd.cpp
 
-obj/ComInterface.o: src/ComInterface.cpp inc/ComChannel.hh
+obj/ComInterface.o: src/ComInterface.cpp inc/ComInterface.hh
 	g++ -c ${CPPFLAGS} -o obj/ComInterface.o src/ComInterface.cpp
 
 doc:

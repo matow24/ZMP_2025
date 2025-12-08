@@ -17,7 +17,9 @@ std::string ComInterface::getCommand_UpdateObj(const std::string& Name, const Ve
 bool ComInterface::sendCommand(const std::string& cmd){
     const int socket = this->channel.GetSocket();
 
-    std::cout << "Sending: "<< cmd <<std::endl;
+    std::cout << "Sending: "<< cmd << std::endl;
+
+    std::lock_guard<std::mutex> lockmtx(channel.UseGuard());
 
     if( write(socket, cmd.c_str(), cmd.length()) != cmd.length() )  {
         return false;
@@ -37,27 +39,9 @@ bool ComInterface::UpdateObj(const std::string& Name, const Vector3D& Trans_m, c
 }
 
 bool ComInterface::Clear() {
-    return sendCommand("Clear");
-
-    // const char* msg = "Clear \n";
-    // const int socket = this->channel.GetSocket();
-
-    // if( write(socket, msg, strlen(msg)) != strlen(msg) ) {
-    //     return false;
-    // }
-
-    // return true;  
+    return sendCommand("Clear \n");
 }
 
 bool ComInterface::Close() {
-    return sendCommand("Close");
-
-    // const char* msg = "Close \n";
-    // const int socket = this->channel.GetSocket();
-
-    // if( write(socket, msg, strlen(msg)) != strlen(msg) ) {
-    //     return false;
-    // }
-
-    // return true;  
+    return sendCommand("Close \n");
 }

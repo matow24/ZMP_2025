@@ -31,7 +31,7 @@ class ComInterface
     * Konstruktor klasy, blokuje on muteks kanału komunikacyjnego
     * \param _channel - referencja na kanał komunikacyjny z serwerem
     */
-    ComInterface(AbstractComChannel& _channel);
+    ComInterface(AbstractComChannel& _channel) : channel(_channel) {};
 
     /*!
     * \brief Funkcja dodająca obiekt do serwera

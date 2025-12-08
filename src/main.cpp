@@ -21,9 +21,11 @@ int main (int argc, char* args[])
   if (!OpenConnection(Socket4Sending)) return 5;
 
   ComChannel ComCh;
-  // ComCh.Init(Socket4Sending);
+  ComCh.Init(Socket4Sending);
+  cout << "Connected to socket " << ComCh.GetSocket() << endl;
 
-  // ComInterface ComFace(ComCh);
+  ComInterface ComFace(ComCh);
+  if(ComFace.Clear()) cout << "Oczyszczono plansze" << endl;
 
   // wyczyść scenę i wstaw tam obiekty z XMLa
 
@@ -43,27 +45,27 @@ int main (int argc, char* args[])
     Objects.push_back(obiekt);
   }*/
 
-  if(!openCommandFile(args[1])) return 6;
+  //if(!openCommandFile(args[1])) return 6;
 
   /************************* */
   
-  AbstractInterp4Command *pSetCmd = bazaPluginow.getCmd("Move");
-  if(pSetCmd==nullptr) {
-    cerr << "!!! Blad: stworzona wtyczka jest pusta" << endl;
-    return 6;
-  }
+  // AbstractInterp4Command *pSetCmd = bazaPluginow.getCmd("Move");
+  // if(pSetCmd==nullptr) {
+  //   cerr << "!!! Blad: stworzona wtyczka jest pusta" << endl;
+  //   return 6;
+  // }
     
-  // exec zadane polecenia
-  cout << endl;
-  cout << pSetCmd->GetCmdName() << endl;
-  cout << endl;
-  pSetCmd->PrintSyntax();
-  cout << endl;
-  pSetCmd->PrintCmd();
-  cout << endl;
-  /*********/
+  // // exec zadane polecenia
+  // cout << endl;
+  // cout << pSetCmd->GetCmdName() << endl;
+  // cout << endl;
+  // pSetCmd->PrintSyntax();
+  // cout << endl;
+  // pSetCmd->PrintCmd();
+  // cout << endl;
+  // /*********/
   
-  delete pSetCmd;
+  // delete pSetCmd;
 
 
   
