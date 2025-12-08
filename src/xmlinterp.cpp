@@ -348,7 +348,7 @@ void XMLInterp4Config::warning(const xercesc::SAXParseException&  rException)
  * \retval true - jeśli wczytanie zostało zrealizowane poprawnie,
  * \retval false - w przeciwnym przypadku.
  */
-bool ReadFile(const char* sFileName, Configuration &rConfig)
+bool ReadXMLFile(const char* sFileName, Configuration &rConfig)
 {
    try {
             XMLPlatformUtils::Initialize();

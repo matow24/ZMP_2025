@@ -87,6 +87,6 @@ class XMLInterp4Config : public xercesc::DefaultHandler {
     Configuration* pConfig = nullptr;
 };
 
-bool ReadFile(const char* sFileName, Configuration &rConfig);
+bool ReadXMLFile(const char* sFileName, Configuration &rConfig);
 
 #endif
