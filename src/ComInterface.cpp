@@ -17,7 +17,7 @@ std::string ComInterface::getCommand_UpdateObj(const std::string& Name, const Ve
 bool ComInterface::sendCommand(const std::string& cmd){
     const int socket = this->channel.GetSocket();
 
-    std::cout << "Sending: "<< cmd << std::endl;
+    //std::cout << "Sending: "<< cmd << std::endl;
 
     std::lock_guard<std::mutex> lockmtx(channel.UseGuard());
 
@@ -43,5 +43,7 @@ bool ComInterface::Clear() {
 }
 
 bool ComInterface::Close() {
-    return sendCommand("Close \n");
+    bool status = sendCommand("Close \n");
+    if(status) std::cout << "Zamknieto polaczenie z serwerem" << std::endl;
+    return status;
 }
