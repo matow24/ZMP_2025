@@ -25,7 +25,7 @@ interp: obj/main.o obj/PlugInContainer.o obj/LibInterface.o obj/xmlinterp.o obj/
 
 
 obj/main.o: src/main.cpp inc/AbstractInterp4Command.hh inc/AbstractScene.hh\
-            inc/AbstractComChannel.hh inc/PlugInContainer.hh \
+            inc/AbstractComChannel.hh inc/PlugInContainer.hh inc/ComInterface.hh\
 			inc/klient/klientmain.hh
 	g++ -c ${CPPFLAGS} -o obj/main.o src/main.cpp
 

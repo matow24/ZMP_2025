@@ -25,9 +25,9 @@ class ComChannel : public AbstractComChannel {
 
   public:
 
-  ComChannel(){};
+  ComChannel() {};
 
-  ~ComChannel() {}
+  ~ComChannel() {};
   
   /*!
     * \brief Inicjalizuje destryptor gniazda.

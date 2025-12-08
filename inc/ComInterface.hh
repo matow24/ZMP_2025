@@ -1,4 +1,5 @@
-#pragma once
+#ifndef COMINTERFACE_HH
+#define COMINTERFACE_HH
 
 #include <string>
 #include <sstream>
@@ -80,3 +81,5 @@ class ComInterface
 
     ~ComInterface() { this->channel.UnlockAccess(); }
 };
+
+#endif
