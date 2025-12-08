@@ -1,3 +1,6 @@
+#ifndef MAIN_HH__
+#define MAIN_HH__
+
 #include <iostream>
 #include <dlfcn.h>
 #include <cassert>
@@ -54,3 +57,5 @@ bool checkArgs(int argc, char* args[]) {
 
   return true;
 }
+
+#endif
