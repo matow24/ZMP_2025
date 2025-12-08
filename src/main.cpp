@@ -25,25 +25,29 @@ int main (int argc, char* args[])
   cout << "Connected to socket " << ComCh.GetSocket() << endl;
 
   ComInterface ComFace(ComCh);
-  if(ComFace.Clear()) cout << "Oczyszczono plansze" << endl;
+  ComFace.Clear();
 
   // wyczyść scenę i wstaw tam obiekty z XMLa
 
-  /*std::vector<MobileObj> Objects;
+  //std::vector<MobileObj> Objects;
   // Utwórz MobileObj dla każdego obiektu zczytanego z XMLa
-  for(int i = 0; i<Config.objects.size(); i++) {
+  for(const auto& obj : Config.objects) {
     MobileObj obiekt;
-    obiekt.SetName(Config.objects.at(i).Name.c_str());
-    obiekt.SetPosition_m(Config.objects.at(i).Trans_m);
-    obiekt.SetRotation_deg(Config.objects.at(i).RotXYZ_deg);
+    obiekt.SetName(obj.Name.c_str());
+    obiekt.SetPosition_m(obj.Trans_m);
+    obiekt.SetRotation_deg(obj.RotXYZ_deg);
+
+    if(ComFace.AddObj(obj.Name, obj.Shift, obj.Scale, obj.Trans_m, obj.RotXYZ_deg, obj.RGB)) {
+      cout << "Dodano obiekt " << obj.Name <<endl;
+    }
 
 
-    //p_p = obiekt.GetAng_Roll_deg()*obiekt.GetAng_Pitch_deg()*obiekt.GetAng_Yaw_deg()*(Config.objects.at(i).Scale*( p +Config.objects.at(i).Shift)) + Config.objects.at(i).Trans_m;
+    //p_p = obiekt.GetAng_Roll_deg()*obiekt.GetAng_Pitch_deg()*obiekt.GetAng_Yaw_deg()*(obj.Scale*( p +obj.Shift)) + obj.Trans_m;
 
     //Config.objects.at(i);
 
-    Objects.push_back(obiekt);
-  }*/
+    //Objects.push_back(obiekt);
+  }
 
   //if(!openCommandFile(args[1])) return 6;
 
