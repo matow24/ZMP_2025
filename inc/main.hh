@@ -59,4 +59,22 @@ bool checkArgs(int argc, char* args[]) {
   return true;
 }
 
+void setUpScene(Scene& Scn, Configuration& Config, ComInterface& Face) {
+  Face.Clear();
+
+  for(const auto& obj : Config.objects) {
+    MobileObj* obiekt = new MobileObj();
+    obiekt->SetName(obj.Name.c_str());
+    obiekt->SetPosition_m(obj.Trans_m);
+    obiekt->SetRotation_deg(obj.RotXYZ_deg);
+
+    if(Face.AddObj(obj.Name, obj.Shift, obj.Scale, obj.Trans_m, obj.RotXYZ_deg, obj.RGB)) {
+      Scn.AddMobileObj(obiekt);
+      cout << "Dodano obiekt " << obj.Name <<endl;
+    } else cerr << "Nie udalo sie dodac obiektu "<< obj.Name << std::endl;
+    
+    //p_p = obiekt.GetAng_Roll_deg()*obiekt.GetAng_Pitch_deg()*obiekt.GetAng_Yaw_deg()*(obj.Scale*( p +obj.Shift)) + obj.Trans_m;
+  }
+}
+
 #endif
