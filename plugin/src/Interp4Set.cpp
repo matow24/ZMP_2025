@@ -59,17 +59,25 @@ bool Interp4Set::ExecCmd( AbstractScene      &rScn,
 			   AbstractComChannel &rComChann
 			 )
 {
-  rScn.FindMobileObj(sMobObjName)->SetName(_name.c_str());
+  AbstractMobileObj* MobObj= rScn.FindMobileObj(sMobObjName);
+  if(MobObj == nullptr){
+    std::cerr << "Nie moge znalezc obiektu: " << this->_name.c_str() << std::endl;
+    return false;
+  }
+  Vector3D Vinit_location(_init_x, _init_y, _init_z);
 
-  Vector3D Vinit_location;
-  Vinit_location[0] = _init_x;
-  Vinit_location[1] = _init_y;
-  Vinit_location[2] = _init_z;
-  rScn.FindMobileObj(sMobObjName)->SetPosition_m(Vinit_location);
+  MobObj->LockAccess();
 
-  rScn.FindMobileObj(sMobObjName)->SetAng_Roll_deg(_init_roll);
-  rScn.FindMobileObj(sMobObjName)->SetAng_Pitch_deg(_init_pitch);
-  rScn.FindMobileObj(sMobObjName)->SetAng_Yaw_deg(_init_yaw);
+  MobObj->SetName(_name.c_str());
+  MobObj->SetPosition_m(Vinit_location);
+  MobObj->SetAng_Roll_deg(_init_roll);
+  MobObj->SetAng_Pitch_deg(_init_pitch);
+  MobObj->SetAng_Yaw_deg(_init_yaw);
+
+  if(!updateServer(MobObj, rComChann)) 
+          return false;
+          
+  MobObj->UnlockAccess();
   
   return true;
 }

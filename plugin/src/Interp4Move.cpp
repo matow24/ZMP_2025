@@ -66,15 +66,35 @@ bool Interp4Move::ExecCmd( AbstractScene      &rScn,
     return false;
   }
 
-  Vector3D init_pos = rScn.FindMobileObj(sMobObjName)->GetPosition_m();
-  int step_time_s;
-  
-  while((rScn.FindMobileObj(sMobObjName)->GetPosition_m() - init_pos).Length() != _path_len) {
-    Vector3D new_Position = rScn.FindMobileObj(sMobObjName)->GetPosition_m();
-    new_Position[0] += (_speed_mmS/1000.0*step_time_s); //przesun X+
-
-    rScn.FindMobileObj(sMobObjName)->SetPosition_m(new_Position);
+  AbstractMobileObj* MobObj = rScn.FindMobileObj(this->_name.c_str());
+  if( MobObj == nullptr )  {
+      std::cerr << "Nie moge znalezc obiektu: " << this->_name.c_str() << std::endl;
+      return false;
   }
+
+  Vector3D init_pos = MobObj->GetPosition_m();
+  double init_roll = MobObj->GetAng_Roll_deg();
+  double init_pitch = MobObj->GetAng_Pitch_deg();
+  double init_yaw = MobObj->GetAng_Yaw_deg();
+
+  double delta_x_m=0, delta_y_m=0, delta_z_m=0;
+  double dist_step_m = (double)_path_len /FPS;
+  double time_step_us = (((double)_path_len/this->_speed_mmS)*1000000) /FPS;
+
+    for(int i = 0; i < FPS; i++)  {
+        MobObj->LockAccess();
+  
+        delta_x_m += dist_step_m * cos(init_pitch*M_PI/180)*cos(init_yaw*M_PI/180);
+        delta_y_m += dist_step_m * (cos(init_roll*M_PI/180)*sin(init_yaw*M_PI/180) + cos(init_yaw*M_PI/180)*sin(init_pitch*M_PI/180)*sin(init_roll*M_PI/180));
+        delta_z_m += dist_step_m * (sin(init_roll*M_PI/180)*sin(init_yaw*M_PI/180) - cos(init_roll*M_PI/180)*cos(init_yaw*M_PI/180)*sin(init_pitch*M_PI/180));
+        MobObj->SetPosition_m(Vector3D(delta_x_m + init_pos[0], delta_y_m + init_pos[1], delta_z_m + init_pos[2]));
+
+        if(!updateServer(MobObj, rComChann)) 
+                return false;
+
+        MobObj->UnlockAccess();
+        usleep(time_step_us);
+    }
   
   return true;
 }

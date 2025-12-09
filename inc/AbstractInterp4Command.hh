@@ -13,6 +13,9 @@
 #include "AbstractScene.hh"
 #include "AbstractComChannel.hh"
 
+#include <unistd.h>
+
+#define FPS 100
 
  /*!
   * \brief Definiuje interfejs interpretera polecenia.

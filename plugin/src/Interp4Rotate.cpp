@@ -1,10 +1,6 @@
 #include <iostream>
-#include <unistd.h>
 #include "Interp4Rotate.hh"
 #include "ComInterface.hh"
-
-#define N 100
-
 
 using std::cout;
 using std::endl;
@@ -72,18 +68,18 @@ bool Interp4Rotate::ExecCmd( AbstractScene      &rScn,
   AbstractMobileObj* MobObj = rScn.FindMobileObj(this->_name.c_str());
 
   if( MobObj == nullptr )  {
-      std::cerr<<"Nie mogę znaleźć obiektu: "<<this->_name.c_str()<<std::endl;
+      std::cerr << "Nie moge znalezc obiektu: " << this->_name.c_str() << std::endl;
       return false;
   }
 
   double delta_deg = 0;
-  double dist_step_deg = (double)_rot_deg/N;
-  double time_step_us = (abs( ((double)this->_rot_deg / this->_rot_speed_degS) )*1000000)/N;
+  double dist_step_deg = (double)_rot_deg /FPS;
+  double time_step_us = (abs( ((double)this->_rot_deg / this->_rot_speed_degS) )*1000000) /FPS;
 
   if(_axis == "OX") {
     double init_rot_deg = MobObj->GetAng_Roll_deg();
 
-    for(int i = 0; i < N; i++)    {
+    for(int i = 0; i < FPS; i++)    {
       delta_deg += dist_step_deg;
 
       MobObj->LockAccess();
@@ -100,7 +96,7 @@ bool Interp4Rotate::ExecCmd( AbstractScene      &rScn,
   else if(_axis == "OY"){
     double init_rot_deg = MobObj->GetAng_Pitch_deg();
 
-    for(int i = 0; i < N; i++)    {
+    for(int i = 0; i < FPS; i++)    {
       delta_deg += dist_step_deg;
 
       MobObj->LockAccess();
@@ -118,7 +114,7 @@ bool Interp4Rotate::ExecCmd( AbstractScene      &rScn,
   else if(_axis == "OZ") {
     double init_rot_deg = MobObj->GetAng_Yaw_deg();
 
-    for(int i = 0; i < N; i++)    {
+    for(int i = 0; i < FPS; i++)    {
       delta_deg += dist_step_deg;
 
       MobObj->LockAccess();
