@@ -74,7 +74,7 @@ bool Interp4Set::ExecCmd( AbstractScene      &rScn,
   MobObj->SetAng_Pitch_deg(_init_pitch);
   MobObj->SetAng_Yaw_deg(_init_yaw);
 
-  if(!updateServer(MobObj, rComChann)) 
+  if(!updateScene(MobObj, rComChann)) 
           return false;
           
   MobObj->UnlockAccess();

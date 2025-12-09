@@ -34,7 +34,7 @@ class MobileObj : public AbstractMobileObj {
   const char** _Cmd4StatDesc = nullptr;
 
   public:
-
+    MobileObj() {}
     ~MobileObj() {}
 
     void SetCmds(const char *CmdsTab[STATES_NUMBER]) { _Cmd4StatDesc = CmdsTab; }
@@ -142,7 +142,7 @@ class MobileObj : public AbstractMobileObj {
     * \brief Odblokowuje dostęp do obiektu.
     *  Odblokowuje dostęp do obiektu.
     */
-    void UnLockAccess() { this->lock.unlock(); }
+    void UnlockAccess() { this->lock.unlock(); }
 };
 
 #endif

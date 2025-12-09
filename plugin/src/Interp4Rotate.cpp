@@ -85,7 +85,7 @@ bool Interp4Rotate::ExecCmd( AbstractScene      &rScn,
       MobObj->LockAccess();
       
       MobObj->SetAng_Roll_deg(init_rot_deg + delta_deg);
-      if(!updateServer(MobObj, rComChann)) 
+      if(!updateScene(MobObj, rComChann)) 
         return false;
 
       MobObj->UnlockAccess();
@@ -102,7 +102,7 @@ bool Interp4Rotate::ExecCmd( AbstractScene      &rScn,
       MobObj->LockAccess();
       
       MobObj->SetAng_Pitch_deg(init_rot_deg + delta_deg);
-      if(!updateServer(MobObj, rComChann)) 
+      if(!updateScene(MobObj, rComChann)) 
         return false;
 
       MobObj->UnlockAccess();
@@ -120,7 +120,7 @@ bool Interp4Rotate::ExecCmd( AbstractScene      &rScn,
       MobObj->LockAccess();
       
       MobObj->SetAng_Yaw_deg(init_rot_deg + delta_deg);
-      if(!updateServer(MobObj, rComChann)) 
+      if(!updateScene(MobObj, rComChann)) 
         return false;
 
       MobObj->UnlockAccess();

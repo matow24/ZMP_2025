@@ -13,6 +13,8 @@
 #include "AbstractScene.hh"
 #include "AbstractComChannel.hh"
 
+#include "ComInterface.hh"
+
 #include <unistd.h>
 
 #define FPS 100
@@ -70,21 +72,6 @@
   };
 
 
-bool updateServer(AbstractMobileObj* MobObj, AbstractComChannel &rComChan)
-{
-    ComInterface interface(rComChan);
-
-    Vector3D objPos(MobObj->GetAng_Roll_deg(), MobObj->GetAng_Pitch_deg(), MobObj->GetAng_Yaw_deg());
-
-    if(!interface.UpdateObj(MobObj->GetName(), MobObj->GetPosition_m(), objPos)) {
-
-        std::cerr << "Nie udalo sie zaktualizowac obiektu: "<< MobObj->GetName() <<std::endl;
-        MobObj->UnlockAccess();
-
-        return false;
-    }
-
-    return true;
-}
+bool updateScene(AbstractMobileObj* MobObj, AbstractComChannel &rComChan);
 
 #endif

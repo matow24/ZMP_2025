@@ -11,7 +11,22 @@ extern "C" {
   const char* GetCmdName() { return "Move"; }
 }
 
+bool updateScene(AbstractMobileObj* MobObj, AbstractComChannel &rComChan)
+{
+    ComInterface interface(rComChan);
 
+    Vector3D objPos(MobObj->GetAng_Roll_deg(), MobObj->GetAng_Pitch_deg(), MobObj->GetAng_Yaw_deg());
+
+    if(!interface.UpdateObj(MobObj->GetName(), MobObj->GetPosition_m(), objPos)) {
+
+        std::cerr << "Nie udalo sie zaktualizowac obiektu: "<< MobObj->GetName() <<std::endl;
+        MobObj->UnlockAccess();
+
+        return false;
+    }
+
+    return true;
+}
 
 
 /*!
@@ -89,7 +104,7 @@ bool Interp4Move::ExecCmd( AbstractScene      &rScn,
         delta_z_m += dist_step_m * (sin(init_roll*M_PI/180)*sin(init_yaw*M_PI/180) - cos(init_roll*M_PI/180)*cos(init_yaw*M_PI/180)*sin(init_pitch*M_PI/180));
         MobObj->SetPosition_m(Vector3D(delta_x_m + init_pos[0], delta_y_m + init_pos[1], delta_z_m + init_pos[2]));
 
-        if(!updateServer(MobObj, rComChann)) 
+        if(!updateScene(MobObj, rComChann)) 
                 return false;
 
         MobObj->UnlockAccess();
