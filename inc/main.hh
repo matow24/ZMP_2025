@@ -9,6 +9,7 @@
 #include "klient/klientmain.hh"
 #include "MobileObj.hh"
 #include "ComInterface.hh"
+#include "Scene.hh"
 
 
 bool preprocessCmdFile(const char* argv);

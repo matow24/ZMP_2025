@@ -27,23 +27,24 @@ int main (int argc, char* args[])
   ComInterface ComFace(ComCh);
   ComFace.Clear();
 
+  Scene Scena;
+
   //std::vector<MobileObj> Objects;
   // Utwórz MobileObj dla każdego obiektu zczytanego z XMLa
   for(const auto& obj : Config.objects) {
-    MobileObj obiekt;
-    obiekt.SetName(obj.Name.c_str());
-    obiekt.SetPosition_m(obj.Trans_m);
-    obiekt.SetRotation_deg(obj.RotXYZ_deg);
+    MobileObj* obiekt = new MobileObj();
+    obiekt->SetName(obj.Name.c_str());
+    obiekt->SetPosition_m(obj.Trans_m);
+    obiekt->SetRotation_deg(obj.RotXYZ_deg);
 
     if(ComFace.AddObj(obj.Name, obj.Shift, obj.Scale, obj.Trans_m, obj.RotXYZ_deg, obj.RGB)) {
+      Scena.AddMobileObj(obiekt);
       cout << "Dodano obiekt " << obj.Name <<endl;
-    }
+    } else cerr << "Nie udalo sie dodac obiektu "<< obj.Name << std::endl;
 
-
+    
     //p_p = obiekt.GetAng_Roll_deg()*obiekt.GetAng_Pitch_deg()*obiekt.GetAng_Yaw_deg()*(obj.Scale*( p +obj.Shift)) + obj.Trans_m;
-
     //Config.objects.at(i);
-
     //Objects.push_back(obiekt);
   }
 

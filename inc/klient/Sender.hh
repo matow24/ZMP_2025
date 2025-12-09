@@ -4,7 +4,7 @@
 #include <iostream>
 #include <unistd.h>
 #include <cstring>
-#include "Scene.hh"
+#include "Scena.hh"
 
 
 /*!
@@ -55,7 +55,7 @@ class Sender {
    * \brief Wskaźnik na scenę, które stan jest przesyłany w postaci
    *        poleceń do serwera graficzneg.
    */
-   Scene          *_pScn = nullptr;
+   Scena          *_pScn = nullptr;
 
   
  public:
@@ -63,7 +63,7 @@ class Sender {
    * \brief Inicjalizuje obiekt deskryptorem gniazda i wskaźnikiem
    *        na scenę, na zmianę stanu które będzie ten obiekt reagował.
    */
-   Sender(int Socket, Scene *pScn): _Socket(Socket), _pScn(pScn) {}
+   Sender(int Socket, Scena *pScn): _Socket(Socket), _pScn(pScn) {}
 
   /*!
    * \brief Sprawdza, czy pętla wątku może być wykonywana.

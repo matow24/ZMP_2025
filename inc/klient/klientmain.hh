@@ -70,7 +70,7 @@ bool OpenConnection(int &rSocket)
  * \retval true - Jeśli dokonan zosała zmiana stanu wszystkich obiektów.
  * \retval false - w przypadku przeciwnym.
  */
-bool ChangeState(Scene &Scn) //GeomObject *pObj, AccessControl  *pAccCtrl)
+bool ChangeState(Scena &Scn) //GeomObject *pObj, AccessControl  *pAccCtrl)
 {
   bool Changed;
 
@@ -94,7 +94,7 @@ bool ChangeState(Scene &Scn) //GeomObject *pObj, AccessControl  *pAccCtrl)
 int klientmain()
 {
   cout << "Port: " << PORT << endl;
-  Scene               Scn;
+  Scena               Scn;
   int                 Socket4Sending;   
 
   if (!OpenConnection(Socket4Sending)) return 1;
