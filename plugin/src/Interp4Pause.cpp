@@ -1,4 +1,5 @@
 #include <iostream>
+#include <unistd.h>
 #include "Interp4Pause.hh"
 
 
@@ -61,6 +62,9 @@ bool Interp4Pause::ExecCmd( AbstractScene      &rScn,
   /*
    *  Tu trzeba napisać odpowiedni kod.
    */
+  rComChann.LockAccess();
+  usleep(_pause_time_ms*1000);
+  rComChann.UnlockAccess();
 
   return true;
 }

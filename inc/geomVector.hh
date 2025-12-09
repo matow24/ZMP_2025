@@ -78,6 +78,22 @@ namespace geom {
      */
    Vector() { for (Type &Val : _Coord) Val = 0; }
 
+       /*!
+    * \brief Standardowy konstruktor.
+    * Standardowy konstruktor.
+    * 
+    * \param x - parametr x wektora
+    * \param y - parametr y wektora
+    * \param z - parametr z wektora
+    */
+    Vector(double x,double y,double z) {
+      if(Size >2){
+        _Coord[0] = x;
+        _Coord[1] = y;
+        _Coord[2] = z;
+      } 
+    }
+
     /*!
      * \brief Dostęp do wybranej składowej wektora.
      *

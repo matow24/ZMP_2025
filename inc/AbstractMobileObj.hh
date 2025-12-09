@@ -101,6 +101,17 @@
         *  \return Nazwa obiektu.
         */
         virtual const std::string & GetName() const = 0;
+       /*!
+        * \brief Blokuje dostęp do obiektu.
+        *  Blokuje dostęp do obiektu.
+        */
+        virtual void LockAccess() = 0;
+
+        /*!
+        * \brief Odblokowuje dostęp do obiektu.
+        *  Odblokowuje dostęp do obiektu.
+        */
+        virtual void UnlockAccess() = 0;
     };
 
 

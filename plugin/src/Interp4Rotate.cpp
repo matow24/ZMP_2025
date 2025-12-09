@@ -1,5 +1,9 @@
 #include <iostream>
+#include <unistd.h>
 #include "Interp4Rotate.hh"
+#include "ComInterface.hh"
+
+#define N 100
 
 
 using std::cout;
@@ -49,7 +53,6 @@ const char* Interp4Rotate::GetCmdName() const
   return ::GetCmdName();
 }
 
-
 /*!
  *
  */
@@ -66,21 +69,68 @@ bool Interp4Rotate::ExecCmd( AbstractScene      &rScn,
     return false;
   }
 
-  int step_time_s; //co ile s wysylany jest update pozycji
-  if(_axis == "X") {
-    int init_rot_deg = rScn.FindMobileObj(sMobObjName)->GetAng_Roll_deg();
-    if(_rot_speed_degS < 0) _rot_deg *= (-1);
+  AbstractMobileObj* MobObj = rScn.FindMobileObj(this->_name.c_str());
 
-    while(rScn.FindMobileObj(sMobObjName)->GetAng_Roll_deg() != init_rot_deg + _rot_deg) {
-      rScn.FindMobileObj(sMobObjName)->SetAng_Roll_deg(init_rot_deg + _rot_speed_degS*step_time_s);
+  if( MobObj == nullptr )  {
+      std::cerr<<"Nie mogę znaleźć obiektu: "<<this->_name.c_str()<<std::endl;
+      return false;
+  }
+
+  double delta_deg = 0;
+  double dist_step_deg = (double)_rot_deg/N;
+  double time_step_us = (abs( ((double)this->_rot_deg / this->_rot_speed_degS) )*1000000)/N;
+
+  if(_axis == "OX") {
+    double init_rot_deg = MobObj->GetAng_Roll_deg();
+
+    for(int i = 0; i < N; i++)    {
+      delta_deg += dist_step_deg;
+
+      MobObj->LockAccess();
+      
+      MobObj->SetAng_Roll_deg(init_rot_deg + delta_deg);
+      if(!updateServer(MobObj, rComChann)) 
+        return false;
+
+      MobObj->UnlockAccess();
+
+      usleep(time_step_us);
     }
   }
-  else if(_axis == "Y"){
-    rScn.FindMobileObj(sMobObjName)->SetAng_Pitch_deg(_rot_speed_degS);
+  else if(_axis == "OY"){
+    double init_rot_deg = MobObj->GetAng_Pitch_deg();
+
+    for(int i = 0; i < N; i++)    {
+      delta_deg += dist_step_deg;
+
+      MobObj->LockAccess();
+      
+      MobObj->SetAng_Pitch_deg(init_rot_deg + delta_deg);
+      if(!updateServer(MobObj, rComChann)) 
+        return false;
+
+      MobObj->UnlockAccess();
+
+      usleep(time_step_us);
+    }
 
   }
-  else if(_axis == "Z") {
-    rScn.FindMobileObj(sMobObjName)->SetAng_Yaw_deg(_rot_speed_degS);
+  else if(_axis == "OZ") {
+    double init_rot_deg = MobObj->GetAng_Yaw_deg();
+
+    for(int i = 0; i < N; i++)    {
+      delta_deg += dist_step_deg;
+
+      MobObj->LockAccess();
+      
+      MobObj->SetAng_Yaw_deg(init_rot_deg + delta_deg);
+      if(!updateServer(MobObj, rComChann)) 
+        return false;
+
+      MobObj->UnlockAccess();
+
+      usleep(time_step_us);
+    }
 
   }
   else {
