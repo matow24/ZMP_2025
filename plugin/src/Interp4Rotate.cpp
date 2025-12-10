@@ -164,7 +164,6 @@ bool Interp4Rotate::ExecCmd( AbstractScene      &rScn,
 bool Interp4Rotate::ReadParams(std::istream& Strm_CmdsList)
 {
   Strm_CmdsList >> _name >> _axis >> _rot_speed_degS >> _rot_deg;
-  PrintCmd();
   return !Strm_CmdsList.fail();
 }
 

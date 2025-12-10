@@ -5,6 +5,8 @@
 
 using namespace std;
 
+std::mutex iolock;
+
 PlugInContainer::PlugInContainer() : Serial0Parallel1(false)
 {
   mapa["Set"] = nullptr;
@@ -23,6 +25,9 @@ PlugInContainer::~PlugInContainer()
 
 void threadExec(AbstractInterp4Command* cmd, AbstractScene& scene, ComChannel& channel)
 {
+  iolock.lock();
+  cout << "Uruchomiono wątek " << std::this_thread::get_id() <<endl;
+  iolock.unlock();
   cmd->ExecCmd(scene, NULL, channel);   
 }
 
@@ -67,7 +72,7 @@ int PlugInContainer::ExecInput(std::istream& StrWe, AbstractScene& scene, ComCha
       return -2;
     }
 
-    std::cout<<this->cmd_now->GetCmdName()<< " " << std::endl;
+    this->cmd_now->PrintCmd();
 
     if(Serial0Parallel1 == 0) {
       if(!this->cmd_now->ExecCmd(scene, NULL, channel)) {
