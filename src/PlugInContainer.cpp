@@ -28,7 +28,7 @@ void threadExec(AbstractInterp4Command* cmd, AbstractScene& scene, ComChannel& c
   iolock.lock();
   cout << "Uruchomiono wątek " << std::this_thread::get_id() <<endl;
   iolock.unlock();
-  cmd->ExecCmd(scene, NULL, channel);   
+  cmd->ExecCmd(scene, nullptr, channel);   
 }
 
 int PlugInContainer::ExecInput(std::istream& StrWe, AbstractScene& scene, ComChannel& channel)
@@ -75,7 +75,7 @@ int PlugInContainer::ExecInput(std::istream& StrWe, AbstractScene& scene, ComCha
     this->cmd_now->PrintCmd();
 
     if(Serial0Parallel1 == 0) {
-      if(!this->cmd_now->ExecCmd(scene, NULL, channel)) {
+      if(!this->cmd_now->ExecCmd(scene, nullptr, channel)) {
         return -3;
       }
     }

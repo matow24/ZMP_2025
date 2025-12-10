@@ -38,7 +38,6 @@ int main (int argc, char* args[])
   int execcode = bazaPluginow.ExecInput(istr, Scena, ComCh);
 
   ComFace.Close();
-  if(execcode) return execcode;
-
-  return 0;
+  
+  return execcode;
 }
