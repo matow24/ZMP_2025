@@ -23,7 +23,6 @@ PlugInContainer::~PlugInContainer()
 
 void threadExec(AbstractInterp4Command* cmd, AbstractScene& scene, ComChannel& channel)
 {
-  cout<<"Watek rozpoczyna prace" << endl;
   cmd->ExecCmd(scene, NULL, channel);   
 }
 
@@ -39,18 +38,15 @@ int PlugInContainer::ExecInput(std::istream& StrWe, AbstractScene& scene, ComCha
     }
 
     if( cmd == "Begin_Parallel_Actions" ) {
-      std::cout << "Otrzymano komende pracy wielowatkowej" << std::endl;
-      //Serial0Parallel1 = 1;
+      Serial0Parallel1 = 1;
       continue;
     }
     else if( cmd == "End_Parallel_Actions" ) {
-      std::cout << "Otrzymano komende pracy jednowatkowej" << std::endl;
-      // for(std::thread& task : this->parralel_tasks) {
-      //     task.join();
-      // }
-      // this->parralel_tasks.clear();
-      // Serial0Parallel1 = 0;
-      // std::cout << "Zakonczono prace wielowatkowa" << std::endl;
+      for(std::thread& task : this->parralel_tasks) {
+          task.join();
+      }
+      this->parralel_tasks.clear();
+      Serial0Parallel1 = 0;
 
       continue;
     }
@@ -74,13 +70,11 @@ int PlugInContainer::ExecInput(std::istream& StrWe, AbstractScene& scene, ComCha
     std::cout<<this->cmd_now->GetCmdName()<< " " << std::endl;
 
     if(Serial0Parallel1 == 0) {
-      std::cout << "Rozpoczeto prace jednowatkowa" << std::endl;
       if(!this->cmd_now->ExecCmd(scene, NULL, channel)) {
         return -3;
       }
     }
     else {
-      std::cout << "Rozpoczeto prace wielowatkowa" << std::endl;
       std::thread task(threadExec, this->cmd_now, std::ref(scene), std::ref(channel));
       this->parralel_tasks.push_back(std::move(task));
     }

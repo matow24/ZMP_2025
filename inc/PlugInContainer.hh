@@ -7,6 +7,8 @@
 #include <list>
 #include <thread>
 #include "LibInterface.hh"
+#include "ComChannel.hh"
+
 
 class PlugInContainer
 {
@@ -22,7 +24,7 @@ public:
     bool openPlugin(std::string); 
     AbstractInterp4Command* getCmd(std::string); 
 
-    int ExecInput(std::istream& StrWe,AbstractScene& scene,ComChannel& channel);
+    int ExecInput(std::istream& StrWe, AbstractScene& scene, ComChannel& channel);
 };
 
 #endif
