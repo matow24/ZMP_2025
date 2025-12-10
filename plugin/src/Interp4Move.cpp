@@ -99,7 +99,7 @@ bool Interp4Move::ExecCmd( AbstractScene      &rScn,
   double time_step_us = (((double)_path_len/this->_speed_mmS)*1000000) /FPS;
 
     for(int i = 0; i < FPS; i++)  {
-        MobObj->LockAccess();
+        //MobObj->LockAccess();
   
         delta_x_m += dist_step_m * cos(init_pitch*M_PI/180)*cos(init_yaw*M_PI/180);
         delta_y_m += dist_step_m * (cos(init_roll*M_PI/180)*sin(init_yaw*M_PI/180) + cos(init_yaw*M_PI/180)*sin(init_pitch*M_PI/180)*sin(init_roll*M_PI/180));
@@ -109,7 +109,7 @@ bool Interp4Move::ExecCmd( AbstractScene      &rScn,
         if(!updateScene(MobObj, rComChann)) 
                 return false;
 
-        MobObj->UnlockAccess();
+        //MobObj->UnlockAccess();
         usleep(time_step_us);
     }
   

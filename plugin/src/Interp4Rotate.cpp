@@ -101,13 +101,13 @@ bool Interp4Rotate::ExecCmd( AbstractScene      &rScn,
     for(int i = 0; i < FPS; i++)    {
       delta_deg += dist_step_deg;
 
-      MobObj->LockAccess();
+      //MobObj->LockAccess();
       
       MobObj->SetAng_Roll_deg(init_rot_deg + delta_deg);
       if(!updateScene(MobObj, rComChann)) 
         return false;
 
-      MobObj->UnlockAccess();
+      //MobObj->UnlockAccess();
 
       usleep(time_step_us);
     }
@@ -163,10 +163,8 @@ bool Interp4Rotate::ExecCmd( AbstractScene      &rScn,
  */
 bool Interp4Rotate::ReadParams(std::istream& Strm_CmdsList)
 {
-  /*
-   *  Tu trzeba napisać odpowiedni kod.
-   */
   Strm_CmdsList >> _name >> _axis >> _rot_speed_degS >> _rot_deg;
+  PrintCmd();
   return !Strm_CmdsList.fail();
 }
 
