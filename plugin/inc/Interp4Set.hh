@@ -49,7 +49,7 @@ class Interp4Set: public AbstractInterp4Command {
   /*!
    * \brief Wyświetla wartości wczytanych parametrów
    */
-  virtual void PrintParams() const override {} 
+  virtual void PrintParams() const override;
 
   /*!
    * \brief Wyświetla nazwę polecenia

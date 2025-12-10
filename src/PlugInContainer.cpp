@@ -5,7 +5,7 @@
 
 using namespace std;
 
-PlugInContainer::PlugInContainer()
+PlugInContainer::PlugInContainer() : Serial0Parallel1(false)
 {
   mapa["Set"] = nullptr;
   mapa["Move"] = nullptr;
@@ -20,6 +20,76 @@ PlugInContainer::~PlugInContainer()
   }
   mapa.clear();
 }
+
+void threadExec(AbstractInterp4Command* cmd, AbstractScene& scene, ComChannel& channel)
+{
+  cout<<"Watek rozpoczyna prace" << endl;
+  cmd->ExecCmd(scene, NULL, channel);   
+}
+
+int PlugInContainer::ExecInput(std::istream& StrWe, AbstractScene& scene, ComChannel& channel)
+{  
+  std::string cmd;
+  while(StrWe.good()) {
+    cmd.clear();
+    StrWe >> cmd;
+
+    if( cmd.empty() ) {
+        break;
+    }
+
+    if( cmd == "Begin_Parallel_Actions" ) {
+      std::cout << "Otrzymano komende pracy wielowatkowej" << std::endl;
+      //Serial0Parallel1 = 1;
+      continue;
+    }
+    else if( cmd == "End_Parallel_Actions" ) {
+      std::cout << "Otrzymano komende pracy jednowatkowej" << std::endl;
+      // for(std::thread& task : this->parralel_tasks) {
+      //     task.join();
+      // }
+      // this->parralel_tasks.clear();
+      // Serial0Parallel1 = 0;
+      // std::cout << "Zakonczono prace wielowatkowa" << std::endl;
+
+      continue;
+    }
+
+    if( this->mapa.count(cmd) == 0 ) {
+      break;
+    }   
+
+    this->cmd_now = this->getCmd(cmd);
+
+    if( this->cmd_now == nullptr ) {
+      std::cerr << "!!! Nie udalo sie stworzyc komendy " << cmd << std::endl;
+      return -1;
+    }
+
+    if( !this->cmd_now->ReadParams(StrWe) )  {
+      std::cerr << "!!! Nie mozna odczytac parametrow komendy " << cmd << std::endl;
+      return -2;
+    }
+
+    std::cout<<this->cmd_now->GetCmdName()<< " " << std::endl;
+
+    if(Serial0Parallel1 == 0) {
+      std::cout << "Rozpoczeto prace jednowatkowa" << std::endl;
+      if(!this->cmd_now->ExecCmd(scene, NULL, channel)) {
+        return -3;
+      }
+    }
+    else {
+      std::cout << "Rozpoczeto prace wielowatkowa" << std::endl;
+      std::thread task(threadExec, this->cmd_now, std::ref(scene), std::ref(channel));
+      this->parralel_tasks.push_back(std::move(task));
+    }
+
+  }
+
+  return 0;
+}
+
 
 /*!
   * \brief Otwiera wybrany plugin.
@@ -46,8 +116,6 @@ bool PlugInContainer::openPlugin(std::string plugin_name)
     }
   }
   std::cerr << "!!! Nieznane polecenie " << klucz <<  std::endl;
-  // sprawdź czy taka biblioteka istnieje i dodaj do mapy
-  // ...
   std::cerr << "!!! Nie znaleziono biblioteki " << plugin_name <<  std::endl;
   return 1;
 }

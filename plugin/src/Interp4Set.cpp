@@ -1,6 +1,11 @@
 #include <iostream>
 #include "Interp4Set.hh"
+#include "ComInterface.hh"
 
+#ifndef __GNUG__
+# pragma interface
+# pragma implementation
+#endif
 
 using std::cout;
 using std::endl;
@@ -11,7 +16,21 @@ extern "C" {
   const char* GetCmdName() { return "Set"; }
 }
 
+bool updateScene(AbstractMobileObj* MobObj, AbstractComChannel &rComChan)
+{
+    ComInterface interface(rComChan);
 
+    Vector3D objPos(MobObj->GetAng_Roll_deg(), MobObj->GetAng_Pitch_deg(), MobObj->GetAng_Yaw_deg());
+
+    if(!interface.UpdateObj(MobObj->GetName(), MobObj->GetPosition_m(), objPos)) {
+
+        std::cerr << "Nie udalo sie zaktualizowac obiektu: "<< MobObj->GetName() <<std::endl;
+        MobObj->UnlockAccess();
+
+        return false;
+    }
+    return true;
+}
 
 
 /*!
@@ -59,9 +78,15 @@ bool Interp4Set::ExecCmd( AbstractScene      &rScn,
 			   AbstractComChannel &rComChann
 			 )
 {
-  AbstractMobileObj* MobObj= rScn.FindMobileObj(sMobObjName);
+  if(_name == ""){
+    std::cerr << "!!! Obiekt nie ma nazwy" << std::endl;
+    return false;
+  }
+
+  AbstractMobileObj* MobObj= rScn.FindMobileObj(_name.c_str());
+  
   if(MobObj == nullptr){
-    std::cerr << "Nie moge znalezc obiektu: " << this->_name.c_str() << std::endl;
+    std::cerr << "!!! Nie moge znalezc obiektu: " << this->_name.c_str() << std::endl;
     return false;
   }
   Vector3D Vinit_location(_init_x, _init_y, _init_z);
@@ -82,17 +107,32 @@ bool Interp4Set::ExecCmd( AbstractScene      &rScn,
   return true;
 }
 
+void Interp4Set::PrintParams() const
+{
+  std:cout << _name<< " " << _init_x << " " << _init_y << " " << _init_z 
+            << " " << _init_roll << " " << _init_pitch << " " << _init_yaw << endl;
+}
+
 
 /*!
  *
  */
 bool Interp4Set::ReadParams(std::istream& Strm_CmdsList)
 {
-  /*
-   *  Tu trzeba napisać odpowiedni kod.
-   */
-  Strm_CmdsList >> _name >> _init_x >> _init_y >> _init_z >> _init_roll >> _init_pitch >> _init_yaw;
-  return Strm_CmdsList.fail();
+  // Strm_CmdsList >> _name >> _init_x >> _init_y >> _init_z >> _init_roll >> _init_pitch >> _init_yaw;
+  // return !Strm_CmdsList.fail();
+
+  std::string linia;
+  std::getline(Strm_CmdsList, linia);
+
+  if (!linia.empty() && linia.back() == '\r')
+      linia.pop_back();
+
+  std::istringstream iss(linia);
+  iss >> _name >> _init_x >> _init_y >> _init_z
+      >> _init_roll >> _init_pitch >> _init_yaw;
+
+  return !iss.fail();
 }
 
 

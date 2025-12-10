@@ -2,6 +2,11 @@
 #include "Interp4Rotate.hh"
 #include "ComInterface.hh"
 
+#ifndef __GNUG__
+# pragma interface
+# pragma implementation
+#endif
+
 using std::cout;
 using std::endl;
 
@@ -12,7 +17,21 @@ extern "C" {
 }
 
 
+bool updateScene(AbstractMobileObj* MobObj, AbstractComChannel &rComChan)
+{
+    ComInterface interface(rComChan);
 
+    Vector3D objPos(MobObj->GetAng_Roll_deg(), MobObj->GetAng_Pitch_deg(), MobObj->GetAng_Yaw_deg());
+
+    if(!interface.UpdateObj(MobObj->GetName(), MobObj->GetPosition_m(), objPos)) {
+
+        std::cerr << "Nie udalo sie zaktualizowac obiektu: "<< MobObj->GetName() <<std::endl;
+        MobObj->UnlockAccess();
+
+        return false;
+    }
+    return true;
+}
 
 /*!
  * \brief
@@ -148,7 +167,7 @@ bool Interp4Rotate::ReadParams(std::istream& Strm_CmdsList)
    *  Tu trzeba napisać odpowiedni kod.
    */
   Strm_CmdsList >> _name >> _axis >> _rot_speed_degS >> _rot_deg;
-  return Strm_CmdsList.fail();
+  return !Strm_CmdsList.fail();
 }
 
 

@@ -1,6 +1,6 @@
 
 
-__start__: obj __lines_for_space__ ../libs/libInterp4Move.so
+__start__: obj __lines_for_space__ ../libs/libInterp4Move.so  ../libs/libInterp4Pause.so ../libs/libInterp4Rotate.so ../libs/libInterp4Set.so 
 	@echo "  Tworzenie wtyczki zakonczone."
 	@echo
 
@@ -17,16 +17,59 @@ __lines_for_space__:
 	@echo
 	@echo
 
-../libs/libInterp4Move.so: obj/Interp4Move.o
-	g++ ${LDFLAGS} -o ../libs/libInterp4Move.so obj/Interp4Move.o
+../libs/libInterp4Move.so: obj/Interp4Move.o obj/ComInterface.o
+	g++ ${LDFLAGS} -o ../libs/libInterp4Move.so obj/Interp4Move.o obj/ComInterface.o
 	@echo
 	@echo "  Wtyczka dla polecenia 'Move' zostala utworzona."
 	@echo
+
 
 obj/Interp4Move.o: src/Interp4Move.cpp ../inc/AbstractInterp4Command.hh\
                    ../inc/AbstractScene.hh ../inc/AbstractComChannel.hh\
                    inc/Interp4Move.hh 
 	g++ -c ${CPPFLAGS} -o obj/Interp4Move.o src/Interp4Move.cpp
+
+
+../libs/libInterp4Pause.so: obj/Interp4Pause.o obj/ComInterface.o
+	g++ ${LDFLAGS} -o ../libs/libInterp4Pause.so obj/Interp4Pause.o obj/ComInterface.o
+	@echo
+	@echo "  Wtyczka dla polecenia 'Pause' zostala utworzona."
+	@echo
+
+
+obj/Interp4Pause.o: src/Interp4Pause.cpp ../inc/AbstractInterp4Command.hh\
+                   ../inc/AbstractScene.hh ../inc/AbstractComChannel.hh\
+                   inc/Interp4Pause.hh 
+	g++ -c ${CPPFLAGS} -o obj/Interp4Pause.o src/Interp4Pause.cpp
+
+
+../libs/libInterp4Rotate.so: obj/Interp4Rotate.o obj/ComInterface.o
+	g++ ${LDFLAGS} -o ../libs/libInterp4Rotate.so obj/Interp4Rotate.o obj/ComInterface.o
+	@echo
+	@echo "  Wtyczka dla polecenia 'Rotate' zostala utworzona."
+	@echo
+
+
+obj/Interp4Rotate.o: src/Interp4Rotate.cpp ../inc/AbstractInterp4Command.hh\
+                   ../inc/AbstractScene.hh ../inc/AbstractComChannel.hh\
+                   inc/Interp4Rotate.hh 
+	g++ -c ${CPPFLAGS} -o obj/Interp4Rotate.o src/Interp4Rotate.cpp
+
+
+../libs/libInterp4Set.so: obj/Interp4Set.o obj/ComInterface.o
+	g++ ${LDFLAGS} -o ../libs/libInterp4Set.so obj/Interp4Set.o obj/ComInterface.o
+	@echo
+	@echo "  Wtyczka dla polecenia 'Set' zostala utworzona."
+	@echo
+
+
+obj/Interp4Set.o: src/Interp4Set.cpp ../inc/AbstractInterp4Command.hh\
+                   ../inc/AbstractScene.hh ../inc/AbstractComChannel.hh\
+                   inc/Interp4Set.hh 
+	g++ -c ${CPPFLAGS} -o obj/Interp4Set.o src/Interp4Set.cpp
+
+obj/ComInterface.o: ../src/ComInterface.cpp ../inc/ComChannel.hh 
+	g++ -c ${CPPFLAGS} -o obj/ComInterface.o ../src/ComInterface.cpp
 
 clean:
 	rm -f obj/*

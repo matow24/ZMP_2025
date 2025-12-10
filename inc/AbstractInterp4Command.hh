@@ -13,7 +13,7 @@
 #include "AbstractScene.hh"
 #include "AbstractComChannel.hh"
 
-#include "ComInterface.hh"
+//#include "ComInterface.hh"
 
 #include <unistd.h>
 

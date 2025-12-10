@@ -19,7 +19,7 @@ bool preprocessCmdFile(const char* sFileName)
     return true;
 }
 
-bool openCommandFile(std::string sFileName)
+bool openCommandFile(std::string sFileName, std::ifstream& istr)
 {
     std::string output = sFileName + ".pp";    // wynik po preprocesorze
 
@@ -30,9 +30,9 @@ bool openCommandFile(std::string sFileName)
         return false;
     }
 
-    std::cout << "=== Plik po preprocessingu ===\n";
-    std::cout << f.rdbuf() << "\n";
-    std::cout << "==============================\n";
+    // std::cout << "=== Plik po preprocessingu ===\n";
+    // std::cout << f.rdbuf() << "\n";
+    // std::cout << "==============================\n";
 
     // parsowanie output
 

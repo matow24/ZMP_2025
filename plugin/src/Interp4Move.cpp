@@ -1,6 +1,11 @@
 #include <iostream>
 #include "Interp4Move.hh"
+#include "ComInterface.hh"
 
+#ifndef __GNUG__
+# pragma interface
+# pragma implementation
+#endif
 
 using std::cout;
 using std::endl;
@@ -9,6 +14,16 @@ using std::endl;
 extern "C" {
   AbstractInterp4Command* CreateCmd(void);
   const char* GetCmdName() { return "Move"; }
+}
+
+/*!
+ * \brief
+ *
+ *
+ */
+AbstractInterp4Command* CreateCmd(void)
+{
+  return Interp4Move::CreateCmd();
 }
 
 bool updateScene(AbstractMobileObj* MobObj, AbstractComChannel &rComChan)
@@ -24,21 +39,8 @@ bool updateScene(AbstractMobileObj* MobObj, AbstractComChannel &rComChan)
 
         return false;
     }
-
     return true;
 }
-
-
-/*!
- * \brief
- *
- *
- */
-AbstractInterp4Command* CreateCmd(void)
-{
-  return Interp4Move::CreateCmd();
-}
-
 
 /*!
  *
@@ -125,7 +127,7 @@ bool Interp4Move::ReadParams(std::istream& Strm_CmdsList)
    */
 
   Strm_CmdsList >> _name >> _speed_mmS >> _path_len;
-  return Strm_CmdsList.fail();
+  return !Strm_CmdsList.fail();
 }
 
 

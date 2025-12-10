@@ -4,6 +4,8 @@
 #include <iostream>
 #include <dlfcn.h>
 #include <cassert>
+#include <fstream>
+
 #include "PlugInContainer.hh"
 #include "XML/xmlinterp.hh"
 #include "klient/klientmain.hh"
@@ -13,7 +15,7 @@
 
 
 bool preprocessCmdFile(const char* argv);
-bool openCommandFile(std::string sFileName);
+bool openCommandFile(std::string sFileName, std::ifstream&);
 
 /*!
  * Czyta z pliku opis poleceń i dodaje je do listy komend,

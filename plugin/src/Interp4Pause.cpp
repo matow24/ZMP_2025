@@ -2,6 +2,11 @@
 #include <unistd.h>
 #include "Interp4Pause.hh"
 
+#ifndef __GNUG__
+# pragma interface
+# pragma implementation
+#endif
+
 
 using std::cout;
 using std::endl;
@@ -79,7 +84,9 @@ bool Interp4Pause::ReadParams(std::istream& Strm_CmdsList)
    *  Tu trzeba napisać odpowiedni kod.
    */
   Strm_CmdsList >> _pause_time_ms;
-  return Strm_CmdsList.fail();
+  PrintCmd();
+  cout << "Pauza na " <<_pause_time_ms << endl;
+  return !Strm_CmdsList.fail();
 }
 
 

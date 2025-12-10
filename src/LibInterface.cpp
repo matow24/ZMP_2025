@@ -31,17 +31,22 @@ bool LibInterface::createCmd(){
 
   if (!pFun) {
     cerr << "!!! Nie znaleziono funkcji CreateCmd" << endl;
-    return 1;
+    return false;
   }
 
   _pCreate_Cmd = reinterpret_cast<AbstractInterp4Command* (*)(void)>(pFun);
 
-  return 0;
+  if(_pCreate_Cmd==nullptr) {
+     cerr << "!!! Blad: stworzona wtyczka jest pusta" << endl;
+     return false;
+  }
+
+  return true;
 }
 
 AbstractInterp4Command* LibInterface::get_pCreate_Cmd()
 {
-  if(createCmd()) {
+  if(!createCmd()) {
     return nullptr;
   }
    
